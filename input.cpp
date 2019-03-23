@@ -4,10 +4,11 @@
 #include <string>
 
 #include "input.hpp"
+#include "SolverManager.hpp"
 
 using namespace std;
 
-void input_discrete(int argc, char *argv[]){ ///TLM TODO 2019!
+void SolverManager::input_discrete(int argc, char *argv[]){ ///TLM TODO 2019!
     // user input:
     cout << "input_discrete " <<endl;
     ifstream infile;
@@ -54,12 +55,3 @@ void input_discrete(int argc, char *argv[]){ ///TLM TODO 2019!
     }
 }
 
-
-
-// int main () {
-//   ofstream myfile;
-//   myfile.open ("example.txt");
-//   myfile << "Writing this to a file.\n";
-//   myfile.close();
-//   return 0;
-// }
