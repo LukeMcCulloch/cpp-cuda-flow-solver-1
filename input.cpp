@@ -1,25 +1,65 @@
 // basic file operations
 #include <iostream>
 #include <fstream>
+#include <string>
+
+#include "input.hpp"
+
 using namespace std;
 
-void input_discrete(){ ///TLM TODO 2019!
-    std::ifstream infile("thefile.txt");
-    std::string line;
-    while (std::getline(infile, line)){
+void input_discrete(int argc, char *argv[]){ ///TLM TODO 2019!
+    // user input:
+    cout << "input_discrete " <<endl;
+    ifstream infile;
+    streampos begin,end;
+    string infilename;
 
-        std::istringstream iss(line);
-        int a, b;
-        if (!(iss >> a >> b)) { break; } // error
+    cout << "Please enter the input file name> " << flush;
+    cout << "Default is fifi.dat" << endl;
+    while (true){
 
-        // process pair (a,b)
+        getline( cin, infilename );
+        if (infilename.length()>1){
+
+            cout << "Opening " << infilename <<endl;
+        }
+        else{
+
+            infilename = "fifi.dat";
+            cout << "Opening " << infilename <<endl;
+        }
+        infile.open( infilename.c_str() );
+        if (infile) break;
+        cout << "Invalid file. Please enter a valid input file name> " << flush;
+    }
+
+
+
+    string line;
+    if (infile.is_open()){
+        // begin = infile.tellg();
+        // infile.seekg (0, ios::end);
+        // end = infile.tellg();
+        // infile.seekg (0, ios::beg);
+
+        while ( getline (infile,line) ){
+
+            cout << line << '\n';
+        }
+        infile.close();
+    }
+
+    else{ 
+      cout << "Unable to open file"; 
     }
 }
 
-int main () {
-  ofstream myfile;
-  myfile.open ("example.txt");
-  myfile << "Writing this to a file.\n";
-  myfile.close();
-  return 0;
-}
+
+
+// int main () {
+//   ofstream myfile;
+//   myfile.open ("example.txt");
+//   myfile << "Writing this to a file.\n";
+//   myfile.close();
+//   return 0;
+// }
