@@ -1,7 +1,8 @@
 // reading a text file
 
 #include "Solvermanager.hpp"
-#include "input.hpp"
+//#include "input.hpp"
+#include "inputFunctionStyle.hpp"
 
 using namespace std;
 
