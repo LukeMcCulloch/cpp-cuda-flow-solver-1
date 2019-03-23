@@ -1,0 +1,4 @@
+hello world
+this example file
+shows how to read a file
+line by line in c++
