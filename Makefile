@@ -11,7 +11,7 @@ SRC_DIRS ?= ./src
 #solver_experiments  makefile
 
 ./build/test: 
-	g++  ./src/main.cpp -o ./build/solver
+	g++  ./src/main.cpp -o $(BUILD_DIR)/solver
 
 
 
