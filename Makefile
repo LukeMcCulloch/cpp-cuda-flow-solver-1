@@ -11,7 +11,7 @@ SRC_DIRS ?= ./src
 #solver_experiments  makefile
 
 ./build/test: 
-	g++  ./src/main.cpp -o $(BUILD_DIR)/solver
+	g++  $(SRC_DIRS)/main.cpp -o $(BUILD_DIR)/solver
 
 
 
@@ -19,5 +19,5 @@ SRC_DIRS ?= ./src
 
 
 clean: 
-	-rm -f  driver #./build/main.o
+	-rm -f  $(BUILD_DIR)/main.o
 #
