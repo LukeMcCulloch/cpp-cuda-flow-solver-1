@@ -1,29 +1,23 @@
-FC = gfortran
-CXX = g++
+##
+## http://mrbook.org/blog/tutorials/make/
+##
 
-UNAME := $(shell uname -s)
+BUILD_DIR ?= ./build
+SRC_DIRS ?= ./src
 
-FCFLAGS = -Wall -Wextra
-CCFLAGS = -Wall -Wextra
-ifeq ($(UNAME_S),Darwin)
-	LDFLAGS = -lstdc++
-else
-	LDFLAGS = -lc++
-endif
 
-all: test.x
-test.o : foo_mod.o
 
-%.x : %.o foo_mod.o foo_capi.o Foo.o
-	${FC} $^ -o $@ ${LDFLAGS}
 
-%.o : %.f90
-	${FC} ${FCFLAGS} -c $< -o $@
+#solver_experiments  makefile
 
-%.o : %.cpp
-	${CXX} ${CCFLAGS} -c $^ -o $@
+./build/test: 
+	g++  ./src/main.cpp -o ./build/solver
 
-.PHONY : clean
 
-clean :
-	${RM} -rf *.o *.mod test.x
+
+.PHONY: clean
+
+
+clean: 
+	-rm -f  driver #./build/main.o
+#
