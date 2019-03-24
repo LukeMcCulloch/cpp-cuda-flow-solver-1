@@ -5,6 +5,7 @@
 
 #include "array_template.hpp"
 #include "SolverManager.hpp"
+#include "input.hpp"
 //#include "tests_array.hpp"
 
 using namespace std;
