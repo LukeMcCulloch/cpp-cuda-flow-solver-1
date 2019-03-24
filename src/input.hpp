@@ -10,8 +10,8 @@
 #include <stdio.h>
 //#include <iomanip>
 
-//#include "input.hpp"
-//#include "SolverManager.hpp"
+#include "input.hpp"
+#include "SolverManager.hpp"
 
 using namespace std;
 
