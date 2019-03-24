@@ -13,6 +13,7 @@ class SolverManager{
 
         void input_discrete(int argc, char **argv);
         void driver(int argc, char **argv);
+        void startMessage();
 
     private:
 
@@ -30,7 +31,17 @@ class SolverManager{
 
 
 void SolverManager::driver(int argc, char *argv[]){
+    startMessage();
     input_discrete(argc, argv);
+}
+
+void SolverManager::startMessage(){
+    cout << "-------------------------------------------";
+    cout << "Startup:" << endl;
+    cout << "Stream Function Vorticity Equation Scheme" ;
+    cout << "" << endl;
+    cout << "Soving the 2D NSE SFVF for Cavity Flow" << endl;
+    cout << "-------------------------------------------" ;
 }
 
 #endif //__TESTS_ARRAY_INCLUDED__

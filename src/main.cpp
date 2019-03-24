@@ -15,7 +15,7 @@ int main (int argc, char **argv) {
     SolverManager SM = SolverManager();
     SM.driver(argc, argv);
 
-    arraybasic();
+    //arraybasic();
 
     return 0;
 }
