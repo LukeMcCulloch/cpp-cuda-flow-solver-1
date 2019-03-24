@@ -13,7 +13,7 @@ using namespace std;
 int main (int argc, char **argv) {
 
     SolverManager SM = SolverManager();
-    SM.input_discrete(argc, argv);
+    SM.driver(argc, argv);
 
     arraybasic();
 

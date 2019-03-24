@@ -47,5 +47,5 @@ $(BUILD_DIR)/tests_array.o: $(SRC_DIRS)/tests_array.cpp \
 clean: 
 	-rm -f  \
 			$(SRC_DIRS)/main.o  \
-			$(SRC_DIRS)/tests_array.o  \
-			$(BUILD_DIR)/$(EXECUTABLE)
+			$(SRC_DIRS)/tests_array.o  #\
+			#$(BUILD_DIR)/$(EXECUTABLE)

@@ -12,7 +12,7 @@ class SolverManager{
     public:
 
         void input_discrete(int argc, char **argv);
-
+        void driver(int argc, char **argv);
 
     private:
 
@@ -29,5 +29,8 @@ class SolverManager{
 };
 
 
+void SolverManager::driver(int argc, char *argv[]){
+    input_discrete(argc, argv);
+}
 
 #endif //__TESTS_ARRAY_INCLUDED__
