@@ -31,8 +31,11 @@ class SolverManager{
 
 
 void SolverManager::driver(int argc, char *argv[]){
+
     startMessage();
+
     input_discrete(argc, argv);
+    
 }
 
 void SolverManager::startMessage(){
