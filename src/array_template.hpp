@@ -19,6 +19,7 @@ class Array2D; //fwd declaration
 // undefine to disable range checking
 #define RANGE_CHECK
 
+
 class overdetermined : public std::domain_error{
 
    public:
@@ -87,20 +88,27 @@ class Array2D{
     void check_index(int i) const { assert(i >= 0 && i < nrows); }
     public:
         int nrows, ncols;
-        T** array;
+        T* array;
         explicit Array2D(int numrows, int numcols): 
                     nrows(numrows), ncols(numcols){
-            build();initialize();
+            cout << "building \n" << endl;
+            build();
+            cout << "built \n" << endl;
+            //initialize();
+            //cout << "initialized \n" << endl;
             }
         Array2D();
-        //Array2D(int numrows,int numrows);
-        //copy constructor of some kind
+        
+        //copy constructor 
         Array2D(const Array2D& A);
-        ~Array2D ();// {delete array;}
+
+        // destructor
+        ~Array2D ();
 
         //methods:
         void build();
-        void initialize();
+        //void initialize();
+        void setonce( T data);
         void print();
 
        
@@ -120,46 +128,40 @@ class Array2D{
 
 template<class T>
 Array2D<T>::~Array2D(){
-    delete array[0];
-    delete array;
+    delete[] array;
 }
 
 template <class T>
 Array2D<T>::Array2D(){
-//Array2D::Array2D(){
     nrows = 4;
     ncols = 4;
     cout << "build \n" << endl;
     build();
-    cout << "initialize\n" << endl;
-    initialize();
-    cout <<"done with init\n"<<endl;
+    // cout << "initialize\n" << endl;
+    // initialize();
+    // cout <<"done with init\n"<<endl;
 };
 
-// template <class T>
-// Array2D<T>::Array2D(int numrows, int numcols){
-// //Array2D::Array2D(int numrows, int numcols){
-//     nrows = numrows;
-//     ncols = numcols;
-//     cout << "build \n" << endl;
-//     build();
-//     cout << "initialize\n" << endl;
-//     initialize();
-//     cout <<"done with init\n"<<endl;
-// };
+
+
+
+template <class T>
+void Array2D<T>::build(){
+    int j = 0;
+    int size = nrows*ncols;
+    array = new T[size];
+};
+
 
 // copy constructor:
 template <class T>
 Array2D<T>::Array2D(const Array2D& other)
     : nrows(other.nrows), ncols(other.ncols){
-    //nrows = other.nrows;
-    //ncols = other.ncols;
-    int j = 0;
-    int size= nrows*ncols;
-    array = new T*[nrows];
-    T *adata = new T[size];
-    for(j= 0; j < nrows; j++) {
-        array[j]= adata + ncols*j;
+    int size = nrows*ncols;
+    array = new T[size];
+    int i = 0;
+    for(i=0; i < size; i++) {
+        array[i] = other.array[i];
     }
 };
 
@@ -168,12 +170,12 @@ Array2D<T>::Array2D(const Array2D& other)
 template <class T>
 T& Array2D<T>::operator()(int i, int j) {
 	check_indices(i,j);
-    return array[i][j];
+    return array[i*ncols + j];
 }
 template <class T>
 const T& Array2D<T>::operator()(int i, int j) const {
 	check_indices(i,j);
-    return array[i][j];
+    return array[i*ncols + j];
 }
 
 
@@ -181,90 +183,38 @@ template <class T>
 Array2D<T> Array2D<T>::operator=(const Array2D& that) {
 	assert(that.nrows == nrows);
 	assert(that.ncols == ncols);
+    int size = nrows*ncols;
     int i, j;
-	for ( i=0; i<nrows; ++i){
-        for ( j=0; j<ncols;){
-    	    array[i][j] = that.array[i][j];
-        }
+    for(i=0; i < size; i++) {
+    	array[i] = that.array[i];
     }
     return *this;
 }
 
-// template <class T>
-// void Array2D<T>::build(){
-// //void Array2D::build(){
-//     int j = 0;
-//     int size = nrows*ncols;
-//     array = new T*[nrows];
-//     array[0]= new T[size];
-//     for( j= 1; j < nrows; j++) {
-//         array[j]= &array[0][j*ncols];
-//     }
-// };
 
+
+
+
+/**/  //TODO, use this: 
 template <class T>
-void Array2D<T>::build(){
-//void Array2D::build(){
-    int j = 0;
-    int size= nrows*ncols;
-
-    array = new T*[nrows];
-    T *adata = new T[size];
-    for(j= 0; j < nrows; j++) {
-        array[j]= adata + ncols*j;
-    }
-};
-
-
-// template <class T>
-// void Array2D<T>::build(){
-// //void Array2D::build(){
-//     int i = 0;
-//     int size = nrows*ncols;
-//     T **array = NULL;
-//     T *adata = NULL;
-//     array = (T**)malloc(nrows*sizeof(T*));
-//     adata = (T*)malloc(size*sizeof(T));
-//     for( i= 0; i < nrows; i++) array[i]= adata+ncols*i;
-// };
-
-
-template <class T>
-void Array2D<T>::initialize(){
-//void Array2D::initialize(){
+void Array2D<T>::setonce(T data){
     int i = 0;
     int j = 0;
 
     for(i=0; i<nrows; i++){
         for(j=0; j<ncols; j++) {
-            int nn = i+j;
-            T num = T(10.167);
-            array[i][j] = num;//10.167;
-        }
-    }
-};
-
-/*  TODO, use this: 
-template <class T>
-void Array2D<T>::initialize(T data){
-//void Array2D::initialize(){
-    int i = 0;
-    int j = 0;
-
-    for(i=0; i<nrows; i++){
-        for(j=0; j<ncols; j++) {
-            array[i][j] = data;
+            array[i*ncols + j] = data;
             data++;
         }
     }
-};
-*/
+}
+/**/
 
 
 
 
 template <class T>
-Array2D<T> // not tied to one matrix!
+Array2D<T> 
 operator+(const Array2D<T>& lhs, const Array2D<T>& rhs) {
 	assert(lhs.nrows == rhs.nrows);
 	assert(lhs.ncols == rhs.ncols);
@@ -273,11 +223,10 @@ operator+(const Array2D<T>& lhs, const Array2D<T>& rhs) {
 
     Array2D<T> result;
 
-    int i, j;
-	for ( i=0; i<nrows; ++i){
-        for ( j=0; j<ncols; ++j){
-    	    result.array[i][j] = lhs.array[i][j] + rhs.array[i][j];
-        }
+    int size = nrows*ncols;
+    int i;
+    for(i=0; i < size; i++) {
+    	result.array[i] = lhs.array[i] + rhs.array[i];
     }
     return result;
 }
@@ -324,14 +273,12 @@ Traits here?
 */
 template <class T>
 void Array2D<T>::print(){
-//void Array2D::print(){
     int i,j;
-    int oldp= cout.precision(numeric_limits<T>::digits10 + 1);
+    int oldp = cout.precision(numeric_limits<T>::digits10 + 1);
     for( i=0; i<nrows; i++) {
         for(j=0; j<ncols; j++) {
-            cout << i << " " << j << " " << &array[i][j] << endl;
-            cout << array[i][j] << endl;
-            //printf("val = %f",array[i][j],"\n" );
+            cout << i << " " << j << " " << &array[i*ncols + j] << endl;
+            cout << array[i*ncols + j] << endl;
         }
     }
     cout << "\n" << endl;

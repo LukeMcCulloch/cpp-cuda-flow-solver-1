@@ -8,26 +8,34 @@ using namespace std;
 
 int arraybasic() {
 
+
     cout.precision(20);
 
-    cout << "int array \n" << endl;
+    cout << "int array  \n" << endl;
     Array2D <int> self(2,2);
-    //Array2D self(2,2);
+    self.setonce(0);
+
     cout << "printing int array \n" << endl;
     self.print();
+
 
     cout << "float array \n" << endl;
     Array2D <float> yay(2.,2.);
     cout << "printing float array \n" << endl;
+    yay.setonce(1.1);
     yay.print();
+
 
     cout << "double array \n" << endl;
     Array2D <double> da(2.,2.);
     cout << "printing double array \n" << endl;
+    da.setonce(2.2);
     da.print();
 
-    //test copy constructor:
+    cout << "test copy constructor \n" << endl;
     Array2D<float> res = Array2D<float>(3,1);
+    res.setonce(42.);
+    cout << "done with copy constructor \n" << endl;
     res.print();
 
 
@@ -38,14 +46,18 @@ int arraybasic() {
     cout << k << '\n';
     cout << h << '\n';
 
+
+    cout << "test add\n" << endl;
     Array2D<float> smat = res + res;
+    cout << "done with add\n" << endl;
 
     cout << "test () op \n" << endl;
     i = 0;
     j = 0;
     cout << i << " " << j << " " << res(i,j) << endl;
-    cout << i << " " << j << " " << res.array[i][j] << endl;
     cout << i << " " << j << " " << res[i][j] << endl;
     cout << i << " " << j << " " << smat[i][j] << endl;
+
+    std::cout.flush();
     return 0;
 }
