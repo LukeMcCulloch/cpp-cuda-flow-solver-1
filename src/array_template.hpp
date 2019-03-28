@@ -88,6 +88,7 @@ class Array2D{
     void check_index(int i) const { assert(i >= 0 && i < nrows); }
     public:
         int nrows, ncols;
+        size_t storage_size;
         T* array;
         explicit Array2D(int numrows, int numcols): 
                     nrows(numrows), ncols(numcols){
@@ -112,6 +113,11 @@ class Array2D{
         void print();
 
        
+        // return size
+        size_t size() const {
+            return storage_size;
+        }
+        
         // Operators:
         T& operator() (int row, int col);        // Subscript operators in pairs
         const T&  operator() (int row, int col) const;  
@@ -148,8 +154,8 @@ Array2D<T>::Array2D(){
 template <class T>
 void Array2D<T>::build(){
     int j = 0;
-    int size = nrows*ncols;
-    array = new T[size];
+    storage_size = nrows*ncols;
+    array = new T[storage_size];
 };
 
 
