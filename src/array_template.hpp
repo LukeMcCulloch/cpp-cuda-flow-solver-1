@@ -77,27 +77,35 @@ private:
 
 template <class T>
 class Array2D{
+
     void check_indices(int i, int j) const{
         assert(i >= 0 && i < nrows);
         assert(j >= 0 && j < ncols);
     }
+
     void check_size(int other_nrows,int other_ncols) const { 
         assert(nrows == other_nrows);
         assert(ncols == other_ncols); 
     }
+
     void check_index(int i) const { assert(i >= 0 && i < nrows); }
+
+
     public:
         int nrows, ncols;
-        size_t storage_size;
+        int storage_size;
         T* array;
+
+        // explicit constructor declaring size nrow,ncol:
         explicit Array2D(int numrows, int numcols): 
-                    nrows(numrows), ncols(numcols){
+                        nrows(numrows), ncols(numcols){
             cout << "building \n" << endl;
             build();
             cout << "built \n" << endl;
             //initialize();
             //cout << "initialized \n" << endl;
             }
+            
         Array2D();
         
         //copy constructor 
@@ -113,6 +121,14 @@ class Array2D{
         void print();
 
        
+
+        //
+        size_t getnrows() const {
+            return nrows;
+        }
+        size_t getncols() const {
+            return ncols;
+        }
         // return size
         size_t size() const {
             return storage_size;
@@ -163,10 +179,10 @@ void Array2D<T>::build(){
 template <class T>
 Array2D<T>::Array2D(const Array2D& other)
     : nrows(other.nrows), ncols(other.ncols){
-    int size = nrows*ncols;
-    array = new T[size];
+    storage_size = nrows*ncols;
+    array = new T[storage_size];
     int i = 0;
-    for(i=0; i < size; i++) {
+    for(i=0; i < storage_size; i++) {
         array[i] = other.array[i];
     }
 };
@@ -189,9 +205,8 @@ template <class T>
 Array2D<T> Array2D<T>::operator=(const Array2D& that) {
 	assert(that.nrows == nrows);
 	assert(that.ncols == ncols);
-    int size = nrows*ncols;
     int i, j;
-    for(i=0; i < size; i++) {
+    for(i=0; i < storage_size; i++) {
     	array[i] = that.array[i];
     }
     return *this;
