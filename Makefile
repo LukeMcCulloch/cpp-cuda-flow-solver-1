@@ -34,13 +34,13 @@ $(BUILD_DIR)/main.o: 	$(SRC_DIRS)/main.cpp
 
 
 # expression template testing:
-$(BUILD_DIR)/tests_etarray.o: $(SRC_DIRS)/tests_etarray.cpp 
-	g++ -g -c $(SRC_DIRS)/tests_etarray.cpp
+#$(BUILD_DIR)/tests_etarray.o: $(SRC_DIRS)/tests_etarray.cpp 
+#	g++ -g -c $(SRC_DIRS)/tests_etarray.cpp
 
 
 # vanilla overloaded array testing:
-$(BUILD_DIR)/tests_array.o: $(SRC_DIRS)/tests_array.cpp 
-	g++ -g -c $(SRC_DIRS)/tests_array.cpp
+#$(BUILD_DIR)/tests_array.o: $(SRC_DIRS)/tests_array.cpp 
+#	g++ -g -c $(SRC_DIRS)/tests_array.cpp
 
 
 $(OBJECTS): arrayops.hpp array_template.hpp \
