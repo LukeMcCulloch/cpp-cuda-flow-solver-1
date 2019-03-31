@@ -2,62 +2,80 @@
 #include <iostream>
 #include <limits>
 
-#include "array_template.hpp"
+
+// #include "etops1.hpp"
+// #include "etscalar.hpp"
+// #include "etmatrix.hpp"
+// #include "etops2.hpp"
+
+ #include "array_template.hpp"
+ #include "arrayops.hpp"
 
 using namespace std;
 
+
+template <typename T>
+void print (T const& c){
+
+    int ncol = c.getncols();
+    int nrow = c.getnrows();
+    for (int i=0; i<nrow; ++i) {
+        std::cout << '\n';
+        for (int j=0; j<ncol; ++j) {
+            std::cout << c(i,j) << ' ';
+        }
+    }
+    std::cout << "\ndone \n" << std::endl;
+}
+
 int arraybasic() {
 
+    int np = 3;
+    Array2D<double> x(np,np), y(np,np), z(np,np);
+    //Array2D<double> x(np,np), y(np,np), z(np,np);
 
-    cout.precision(20);
+    // initialize arrays with some values
+    for (int i=0; i<np; ++i) {
+         for (int j=0; j<np; ++j) {
+            x(i,j) = static_cast <double>(i*(j+1));
+            x(i,j) = x(i,j) + 5.;
+            y(i,j) = x(i,j)+x(i,j);
+            z(i,j) = x(i,j)+y(i,j);
+         }
+    }
+    //...
+    
+    std::cout << "x: ";
+    print(x);
 
-    cout << "int array  \n" << endl;
-    Array2D <int> self(2,2);
-    self.setonce(0);
+    std::cout << "y: ";
+    print(y);
 
-    cout << "printing int array \n" << endl;
-    self.print();
+    std::cout << "z: ";
+    print(z);
 
-
-    cout << "float array \n" << endl;
-    Array2D <float> yay(2.,2.);
-    cout << "printing float array \n" << endl;
-    yay.setonce(1.1);
-    yay.print();
-
-
-    cout << "double array \n" << endl;
-    Array2D <double> da(2.,2.);
-    cout << "printing double array \n" << endl;
-    da.setonce(2.2);
-    da.print();
-
-    cout << "test copy constructor \n" << endl;
-    Array2D<float> res = Array2D<float>(3,1);
-    res.setonce(42.);
-    cout << "done with copy constructor \n" << endl;
-    res.print();
-
-
-    int i=5, j=6, k;
-    double f=2.0, g=0.5, h;
-    k=sum<int>(i,j);
-    h=sum<double>(f,g);
-    cout << k << '\n';
-    cout << h << '\n';
-
-
-    cout << "test add\n" << endl;
-    Array2D<float> smat = res + res;
-    cout << "done with add\n" << endl;
-
-    cout << "test () op \n" << endl;
-    i = 0;
-    j = 0;
-    cout << i << " " << j << " " << res(i,j) << endl;
-    cout << i << " " << j << " " << res[i][j] << endl;
-    cout << i << " " << j << " " << smat[i][j] << endl;
-
+    std::cout << "z = y + x: \n";
     std::cout.flush();
+    z = y + x;
+    std::cout << "z = y + x done \n";
+    std::cout.flush();
+    print(z);
+    
+    //x = 1.2 * x;  //no support for scalars just yet:: but scalar(i,j) <=> scalar
+    // so in principle it should be possible
+
+    std::cout << "x = z * x";
+    x = z * x;
+    print(x);
+    std::cout << "x = z * x: ";
+    print(x);
+
+    // x = 1.2*x + x*y;
+    // std::cout << "1.2*x + x*y: ";
+    // print(x);
+
+    x = y;
+    std::cout << "after x = y: ";
+    print(x);
     return 0;
 }

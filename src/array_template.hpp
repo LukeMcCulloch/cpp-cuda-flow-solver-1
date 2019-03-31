@@ -234,23 +234,23 @@ void Array2D<T>::setonce(T data){
 
 
 
-template <class T>
-Array2D<T> 
-operator+(const Array2D<T>& lhs, const Array2D<T>& rhs) {
-	assert(lhs.nrows == rhs.nrows);
-	assert(lhs.ncols == rhs.ncols);
-    int nrows = lhs.nrows;
-    int ncols = lhs.ncols;
+// template <class T>
+// Array2D<T> 
+// operator+(const Array2D<T>& lhs, const Array2D<T>& rhs) {
+// 	assert(lhs.nrows == rhs.nrows);
+// 	assert(lhs.ncols == rhs.ncols);
+//     int nrows = lhs.nrows;
+//     int ncols = lhs.ncols;
 
-    Array2D<T> result;
+//     Array2D<T> result;
 
-    int size = nrows*ncols;
-    int i;
-    for(i=0; i < size; i++) {
-    	result.array[i] = lhs.array[i] + rhs.array[i];
-    }
-    return result;
-}
+//     int size = nrows*ncols;
+//     int i;
+//     for(i=0; i < size; i++) {
+//     	result.array[i] = lhs.array[i] + rhs.array[i];
+//     }
+//     return result;
+// }
 
 
 

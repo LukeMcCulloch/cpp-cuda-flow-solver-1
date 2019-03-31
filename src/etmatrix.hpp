@@ -25,49 +25,57 @@ class Array {
      : expr_rep(rb) {
     }
 
+
+
+
     // assignment operator for same type
-    Array& operator= (Array const& b) { 
+    Array& operator=(Array const& b) { 
         assert(size()==b.size());
-        for (size_t idx = 0; idx<b.size(); ++idx) {
-            expr_rep[idx] = b[idx];
+        int nrows = getnrows();
+        int ncols = getncols();
+        for (int i = 0; i<nrows; ++i) {
+            for (int j = 0; j<ncols; ++j) {
+                expr_rep(i,j) = b(i,j);
+            }
         }
         return *this;
     }
 
     // assignment operator for arrays of different type
     template<typename T2, typename Rep2>
-    Array& operator= (Array<T2, Rep2> const& b) { 
+    Array& operator=(Array<T2, Rep2> const& b) { 
         assert(size()==b.size());
-        for (size_t idx = 0; idx<b.size(); ++idx) {
-            expr_rep[idx] = b[idx];
+        int nrows = getnrows();
+        int ncols = getncols();
+        for (int i = 0; i<nrows; ++i) {
+            for (int j = 0; j<ncols; ++j) {
+                expr_rep(i,j) = b(i,j);
+            }
         }
         return *this;
     }
 
 
     // size is size of represented data
-    size_t getnrows() const {
-        return expr_rep.getnrows();
-    }
-    size_t getncols() const {
-        return expr_rep.getncols();
-    }
+    size_t getnrows() const { return expr_rep.getnrows();}
+    size_t getncols() const { return expr_rep.getncols();}
+    size_t size() const { return expr_rep.size();}
 
-    size_t size() const {
-        return expr_rep.size();
-    }
+
 
     // parens ops:
     T operator()(size_t i, size_t j) const {
         assert(i<getnrows());
         assert(i<getncols());
-        return expr_rep.array[i*getncols() + j];
+        //return expr_rep[i*getncols() + j];
+        return expr_rep(i,j);
     }
     // self uses this!
     T& operator()(size_t i, size_t j) {
         assert(i<getnrows());
         assert(i<getncols());
-        return expr_rep.array[i*getncols() + j];
+        //return expr_rep.array[i*getncols() + j];
+        return expr_rep(i,j);
     }
 
     // index operator for constants and variables
