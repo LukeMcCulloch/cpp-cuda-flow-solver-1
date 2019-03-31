@@ -63,6 +63,8 @@ int etarraybasic (){
     
     //x = 1.2 * x;  //no support for scalars just yet:: but scalar(i,j) <=> scalar
     // so in principle it should be possible
+    std::cout << "x: ";
+    print(x);
 
     std::cout << "x = z * x";
     x = z * x;
@@ -70,9 +72,9 @@ int etarraybasic (){
     std::cout << "x = z * x: ";
     print(x);
 
-    // x = 1.2*x + x*y;
-    // std::cout << "1.2*x + x*y: ";
-    // print(x);
+    x = 1.2*x + x*y;
+    std::cout << "1.2*x + x*y: ";
+    print(x);
 
     x = y;
     std::cout << "after x = y: ";

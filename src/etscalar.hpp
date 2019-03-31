@@ -15,8 +15,25 @@ class A_Scalar {
         return s;
     }
 
+    
+    // for index operations the scalar is the value of each element
+    // match () 1D access.
+    T operator() (size_t i)  const {
+        return s;
+    }
+    // match () 2D access..
+    T operator() (size_t i, size_t j)  const {
+        return s;
+    }
+
     // scalars have zero as size
     size_t size() const {
+        return 0;
+    };
+    size_t getnrows() const {
+        return 0;
+    };
+    size_t getncols() const {
         return 0;
     };
 };

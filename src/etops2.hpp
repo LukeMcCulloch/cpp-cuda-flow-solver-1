@@ -12,17 +12,17 @@ using namespace std;
 template <typename T, typename R1, typename R2>
 Array<T,A_Add<T,R1,R2> >
 operator+ (Array<T,R1> const& a, Array<T,R2> const& b) {
-    cout << "adding two arrays in etops2.hpp\n" ;
-    std::cout.flush();
+    //cout << "adding two arrays in etops2.hpp\n" ;
     return Array<T,A_Add<T,R1,R2> >
            (A_Add<T,R1,R2>(a.rep(),b.rep()));
 }
+
 
 // multiplication of two Arrays
 template <typename T, typename R1, typename R2>
 Array<T, A_Mult<T,R1,R2> >
 operator* (Array<T,R1> const& a, Array<T,R2> const& b) {
-    cout << "multiplying two arrays in etops2.hpp\n" ;
+    //cout << "multiplying two arrays in etops2.hpp\n" ;
     return Array<T,A_Mult<T,R1,R2> >
            (A_Mult<T,R1,R2>(a.rep(), b.rep()));
 }
@@ -31,7 +31,7 @@ operator* (Array<T,R1> const& a, Array<T,R2> const& b) {
 template <typename T, typename R2>
 Array<T, A_Mult<T,A_Scalar<T>,R2> >
 operator* (T const& s, Array<T,R2> const& b) {
-    cout << "multiplying an array and a scalar in etops2.hpp\n" ;
+    //cout << "multiplying an array and a scalar in etops2.hpp\n" ;
     return Array<T,A_Mult<T,A_Scalar<T>,R2> >
            (A_Mult<T,A_Scalar<T>,R2>(A_Scalar<T>(s), b.rep()));
 }

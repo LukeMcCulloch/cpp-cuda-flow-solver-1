@@ -57,4 +57,3 @@ clean:
 			$(SRC_DIRS)/tests_array.o  \
 			$(SRC_DIRS)/tests_etarray.o  #\
 			#$(BUILD_DIR)/$(EXECUTABLE)
-

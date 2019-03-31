@@ -33,9 +33,9 @@ class A_Add {
     //    return op1[idx] + op2[idx];
     //}
     T operator()(size_t i, size_t j) const{
-        cout << "A_Add compute sum in etops1.hpp\n" ;
-        cout <<"i,j " << i << " , " << j << "\n" ;
-        cout.flush();
+        //cout << "A_Add compute sum in etops1.hpp\n" ;
+        //cout <<"i,j " << i << " , " << j << "\n" ;
+        //cout.flush();
         assert(i<op1.getnrows());
         assert(j<op1.getncols());
         return op1(i,j) + op2(i,j);
