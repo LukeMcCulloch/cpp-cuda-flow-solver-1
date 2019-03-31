@@ -66,14 +66,14 @@ class Array {
     // parens ops:
     T operator()(size_t i, size_t j) const {
         assert(i<getnrows());
-        assert(i<getncols());
+        assert(j<getncols());
         //return expr_rep[i*getncols() + j];
         return expr_rep(i,j);
     }
     // self uses this!
     T& operator()(size_t i, size_t j) {
         assert(i<getnrows());
-        assert(i<getncols());
+        assert(j<getncols());
         //return expr_rep.array[i*getncols() + j];
         return expr_rep(i,j);
     }

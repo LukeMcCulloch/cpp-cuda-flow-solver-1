@@ -24,18 +24,10 @@ class A_Add {
     // constructor initializes references to operands
     A_Add (OP1 const& a, OP2 const& b)
      : op1(a), op2(b) {
-      //std:cout << "A_Add reference save in etops1.hpp\n" ;
-      //std::cout.flush();
     }
 
     //compute sum when value requested
-    //T operator() (size_t idx) const {
-    //    return op1[idx] + op2[idx];
-    //}
     T operator()(size_t i, size_t j) const{
-        //cout << "A_Add compute sum in etops1.hpp\n" ;
-        //cout <<"i,j " << i << " , " << j << "\n" ;
-        //cout.flush();
         assert(i<op1.getnrows());
         assert(j<op1.getncols());
         return op1(i,j) + op2(i,j);
@@ -87,10 +79,7 @@ class A_Mult {
      : op1(a), op2(b) {
     }
 
-    // compute product when value requested
-    // T operator[] (size_t idx) const {
-    //     return op1[idx] * op2[idx];
-    // }
+
     // compute product when value requested
     T operator() (size_t i, size_t j) const {
         return op1(i,j) * op2(i,j);
