@@ -20,6 +20,8 @@ SRC_DIRS ?= ./src
 EXECUTABLE = solver
 
 
+OBJECTS = main.o tests_array.o tests_etarray.o
+
 $(BUILD_DIR)/solver: 	$(ODIR)/main.o  \
 						$(ODIR)/tests_array.o \
 						$(ODIR)/tests_etarray.o 
@@ -27,34 +29,24 @@ $(BUILD_DIR)/solver: 	$(ODIR)/main.o  \
 
 
 
-$(BUILD_DIR)/main.o: 	$(SRC_DIRS)/main.cpp \
-						$(SRC_DIRS)/array_template.hpp \
-						$(SRC_DIRS)/arrayops.hpp \
-						$(SRC_DIRS)/SolverManager.hpp \
-						$(SRC_DIRS)/input.hpp \
-						$(SRC_DIRS)/tests_array.hpp \
-						$(SRC_DIRS)/tests_etarray.hpp 
+$(BUILD_DIR)/main.o: 	$(SRC_DIRS)/main.cpp 
 	g++ -g -c main.cpp
 
 
-
-$(BUILD_DIR)/tests_etarray.o: $(SRC_DIRS)/tests_etarray.cpp \
-							$(SRC_DIRS)/etops2.hpp \
-							$(SRC_DIRS)/etops1.hpp \
-							$(SRC_DIRS)/etops1a.hpp \
-							$(SRC_DIRS)/etscalar.hpp \
-							$(SRC_DIRS)/etmatrix.hpp \
-							$(SRC_DIRS)/array_template.hpp\
-							$(SRC_DIRS)/arrayops.hpp
+# expression template testing:
+$(BUILD_DIR)/tests_etarray.o: $(SRC_DIRS)/tests_etarray.cpp 
 	g++ -g -c $(SRC_DIRS)/tests_etarray.cpp
 
-	
-$(BUILD_DIR)/tests_array.o: $(SRC_DIRS)/tests_array.cpp \
-							$(SRC_DIRS)/array_template.hpp \
-							$(SRC_DIRS)/arrayops.hpp
+
+# vanilla overloaded array testing:
+$(BUILD_DIR)/tests_array.o: $(SRC_DIRS)/tests_array.cpp 
 	g++ -g -c $(SRC_DIRS)/tests_array.cpp
 
 
+$(OBJECTS): arrayops.hpp array_template.hpp \
+			etmatrix.hpp etscalar.hpp etops1a.hpp \
+			etops1.hpp etops2.hpp \
+			input.hpp
 
 .PHONY: clean
 
@@ -65,3 +57,4 @@ clean:
 			$(SRC_DIRS)/tests_array.o  \
 			$(SRC_DIRS)/tests_etarray.o  #\
 			#$(BUILD_DIR)/$(EXECUTABLE)
+
