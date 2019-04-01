@@ -104,7 +104,7 @@ class Array2D{
             cout << "built \n" << endl;
             //initialize();
             //cout << "initialized \n" << endl;
-            }
+        }
             
         Array2D();
         

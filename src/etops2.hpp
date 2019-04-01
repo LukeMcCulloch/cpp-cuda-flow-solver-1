@@ -42,7 +42,7 @@ operator* (T const& s, Array<T,R2> const& b) {
 //...
 
 
-// matmul two Arrays
+// // matmul two Arrays
 template <typename T, typename R1, typename R2>
 Array<T, MatMult<T,R1,R2> >
 matmul (Array<T,R1> const& a, Array<T,R2> const& b) {
@@ -50,3 +50,12 @@ matmul (Array<T,R1> const& a, Array<T,R2> const& b) {
     return Array<T,MatMult<T,R1,R2> >
            (MatMult<T,R1,R2>(a.rep(), b.rep()));
 }
+
+// multiplication of two Arrays
+// template <typename T, typename R1, typename R2>
+// Array<T, MatMult<T,R1,R2> >
+// operator* (Array<T,R1> const& a, Array<T,R2> const& b) {
+//     //cout << "multiplying two arrays in etops2.hpp\n" ;
+//     return Array<T,MatMult<T,R1,R2> >
+//            (MatMult<T,R1,R2>(a.rep(), b.rep()));
+// }

@@ -116,24 +116,51 @@ class MatMult {
     typename A_Traits<OP1>::ExprRef op1;    // first operand
     typename A_Traits<OP2>::ExprRef op2;    // second operand
 
+
   public:
 
-
+    //ExprRef cache_result;
+    //implement_matmul;
     // constructor initializes references to operands
     MatMult (OP1 const& a, OP2 const& b)
-     : op1(a), op2(b) {
+    : op1(a), op2(b) {
+      //implement_matmul = matmul;
+       //cache_result = matmul(op1,op2);
     }
 
 
+    // auto operator=(){
+    //   auto c(i,k) += op1.array(i,j) * op2.array(j,k);
+    //   return c
+    // }
+
     // compute product when value requested
-    // T operator() (size_t i, size_t j) const {
-    //     OP1 result = matmul(op1 , op2) ;
+    // auto operator=() const {
+    //     auto result = matmul(op1 , op2) ;
     //     return result(i,j);
     // }
 
-    // // compute product when value requested
-    // OP1 matmul (OP1 const& a, OP2 const& b) {
-    //     return matmul(op1 , op2) ;
+    // compute product when value requested
+    // OP1 matmul () {
+    //     return matmul(op1,op2) ;
+    // }
+    
+
+    // compute product when value requested
+    T operator() (size_t i, size_t j) const {
+      T temp = 0.;
+      for (size_t k = 0; k < op1.getncols(); k++) {
+        temp += op1(i, k) * op2(k, j);
+      }
+      return temp;
+    }
+
+    // template <typename C>
+    // void assign_to(C&& c) const {
+
+    //     auto& op1 = this->op1();
+    //     auto& op2 = this->op2();
+
     // }
 
     // size is maximum size

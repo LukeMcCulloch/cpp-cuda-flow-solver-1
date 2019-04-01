@@ -32,6 +32,7 @@ int etarraybasic (){
 
     int np = 3;
     Array<double> a(np,np), b(np,np), c(np,np);
+
     Array2D<double> x(np,np), y(np,np), z(np,np);
 
     // initialize arrays with some values
@@ -57,9 +58,14 @@ int etarraybasic (){
     std::cout << "c: ";
     print(c);
 
-    //c = matmul(a,b);
-    //std::cout << "after c=matmul(a,b) ";
-    //print(c);
+    c = matmul(a,b);
+    std::cout << "after c=matmul(a,b) ";
+    print(c);
+
+    // illegal mixing, need type match:
+    // z = matmul(a,x);
+    // std::cout << "after z=matmul(a,x) ";
+    // print(z);
 
     std::cout << "c = b + a: \n";
     std::cout.flush();
