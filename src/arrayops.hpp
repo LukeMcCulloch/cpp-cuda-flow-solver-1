@@ -72,7 +72,7 @@ matmul(const Array2D<T>& a, const Array2D<T>& b) {
 
     Array2D<T> c(a.nrows,b.ncols);
     c = 0.;
-    
+
     for( size_t i=0; i<a.nrows; ++i ) {
         for( size_t k=0; k<b.ncols; ++k ) {
             c(i,k) = a(i,0) * b(0,k);
@@ -102,10 +102,13 @@ matmul(const Array2D<T>& a, const Array2D<T>& b, Array2D<T>& c) {
 
     c = 0.;
 
-    for (size_t i = 0; i < a.nrows; i++) {
-        for (size_t k = 0; k < a.ncols; k++) {
-            for (size_t j = 0; j < b.ncols; j++) {
-                c(i, j) += a(i, k) * b(k, j);
+    for( size_t i=0; i<a.nrows; ++i ) {
+        for( size_t k=0; k<b.ncols; ++k ) {
+            c(i,k) = a(i,0) * b(0,k);
+        }
+        for( size_t j=1; j<a.ncols; ++j ) {
+            for( size_t  k=0; k<b.ncols; ++k ) {
+                c(i,k) += a(i,j) * b(j,k);
             }
         }
     }

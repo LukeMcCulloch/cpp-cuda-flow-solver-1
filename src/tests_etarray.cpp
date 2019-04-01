@@ -7,8 +7,8 @@
 #include "etmatrix.hpp"
 #include "etops2.hpp"
 
-// #include "array_template.hpp"
-// #include "arrayops.hpp"
+#include "array_template.hpp"
+#include "arrayops.hpp"
 
 using namespace std;
 
@@ -31,12 +31,17 @@ void print (T const& c){
 int etarraybasic (){
 
     int np = 3;
-    Array<double> x(np,np), y(np,np), z(np,np);
-    //Array2D<double> x(np,np), y(np,np), z(np,np);
+    Array<double> a(np,np), b(np,np), c(np,np);
+    Array2D<double> x(np,np), y(np,np), z(np,np);
 
     // initialize arrays with some values
     for (int i=0; i<np; ++i) {
          for (int j=0; j<np; ++j) {
+            a(i,j) = static_cast <double>(i*(j+1));
+            a(i,j) = 1.;//a(i,j) + 5.;
+            b(i,j) = a(i,j)+a(i,j);
+            c(i,j) = a(i,j)+b(i,j);
+
             x(i,j) = static_cast <double>(i*(j+1));
             x(i,j) = 1.;//x(i,j) + 5.;
             y(i,j) = x(i,j)+x(i,j);
@@ -46,40 +51,40 @@ int etarraybasic (){
     //...
     
 
-    std::cout << "y: ";
-    print(y);
+    std::cout << "b: ";
+    print(b);
 
-    std::cout << "z: ";
-    print(z);
+    std::cout << "c: ";
+    print(c);
 
-    //z = matmul(x,y);
-    //std::cout << "after z=matmul(x,y) ";
-    //print(z);
+    //c = matmul(a,b);
+    //std::cout << "after c=matmul(a,b) ";
+    //print(c);
 
-    std::cout << "z = y + x: \n";
+    std::cout << "c = b + a: \n";
     std::cout.flush();
-    z = y + x;
-    std::cout << "z = y + x done \n";
+    c = b + a;
+    std::cout << "c = b + a done \n";
     std::cout.flush();
-    print(z);
+    print(c);
     
-    x = 1.2 * x;  //expression template supports scalars
-    std::cout << "1.2*x ";
-    print(x);
+    a = 1.2 * a;  //eapression template supports scalars
+    std::cout << "1.2*a ";
+    print(a);
 
-    std::cout << "x = z * x";
-    x = z * x;
-    print(x);
-    std::cout << "x = z * x: ";
-    print(x);
+    std::cout << "a = c * a";
+    a = c * a;
+    print(a);
+    std::cout << "a = c * a: ";
+    print(a);
 
-    x = 1.2*x + x*y;
-    std::cout << "1.2*x + x*y: ";
-    print(x);
+    a = 1.2*a + a*b;
+    std::cout << "1.2*a + a*b: ";
+    print(a);
 
-    x = y;
-    std::cout << "after x = y: ";
-    print(x);
+    a = b;
+    std::cout << "after a = b: ";
+    print(a);
     return 0;
 
 }
