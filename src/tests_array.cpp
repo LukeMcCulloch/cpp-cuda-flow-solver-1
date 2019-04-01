@@ -45,18 +45,6 @@ int arraybasic() {
     }
     //...
     
-    std::cout << "x: ";
-    print(x);
-
-    std::cout << "y: ";
-    print(y);
-
-    std::cout << "z: ";
-    print(z);
-
-
-    std::cout << "x: ";
-    print(x);
 
     std::cout << "y: ";
     print(y);
@@ -69,6 +57,11 @@ int arraybasic() {
     print(z);
 
 
+    z = matmul(x,y,z);
+    std::cout << "after z=matmul(x,y,z) ";
+    print(z);
+
+
     std::cout << "z = y + x: \n";
     std::cout.flush();
     z = y + x;
@@ -76,8 +69,9 @@ int arraybasic() {
     std::cout.flush();
     print(z);
     
-    //x = 1.2 * x;  //no support for scalars just yet:: but scalar(i,j) <=> scalar
-    // so in principle it should be possible
+    x = 1.2 * x;  //Array2D supports scalars
+    std::cout << "1.2*x ";
+    print(x);
 
     std::cout << "x = z * x";
     x = z * x;
@@ -85,9 +79,9 @@ int arraybasic() {
     std::cout << "x = z * x: ";
     print(x);
 
-    // x = 1.2*x + x*y;
-    // std::cout << "1.2*x + x*y: ";
-    // print(x);
+    x = 1.2*x + x*y;
+    std::cout << "1.2*x + x*y: ";
+    print(x);
 
     x = y;
     std::cout << "after x = y: ";

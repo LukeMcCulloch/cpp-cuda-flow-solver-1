@@ -140,10 +140,9 @@ class Array2D{
         
         Array2D operator = (const Array2D&);
         Array2D operator = (const T a);
-        //Array2D operator + ()  //not a class member!
 
 
-        // linalg ops:
+        // linalg ops: see array ops
         
 
         // array[][] access:

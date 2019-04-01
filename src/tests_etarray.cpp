@@ -61,9 +61,8 @@ int etarraybasic (){
     std::cout.flush();
     print(z);
     
-    //x = 1.2 * x;  //no support for scalars just yet:: but scalar(i,j) <=> scalar
-    // so in principle it should be possible
-    std::cout << "x: ";
+    x = 1.2 * x;  //expression template supports scalars
+    std::cout << "1.2*x ";
     print(x);
 
     std::cout << "x = z * x";
