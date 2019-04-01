@@ -139,9 +139,14 @@ class Array2D{
         const T&  operator() (int row, int col) const;  
         
         Array2D operator = (const Array2D&);
+        Array2D operator = (const T a);
         //Array2D operator + ()  //not a class member!
 
+
+        // linalg ops:
         
+
+        // array[][] access:
         bracket_proxy<Array2D, T> operator[](int r){
             return bracket_proxy<Array2D, T>(*this, r);
         }
@@ -208,6 +213,14 @@ Array2D<T> Array2D<T>::operator=(const Array2D& that) {
     int i, j;
     for(i=0; i < storage_size; i++) {
     	array[i] = that.array[i];
+    }
+    return *this;
+}
+template <class T>
+Array2D<T> Array2D<T>::operator=(const T a) {
+    int i, j;
+    for(i=0; i < storage_size; i++) {
+    	array[i] = a;
     }
     return *this;
 }
