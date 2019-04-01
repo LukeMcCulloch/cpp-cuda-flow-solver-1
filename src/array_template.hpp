@@ -144,7 +144,7 @@ class Array2D{
 
         // linalg ops: see array ops
         
-
+        
         // array[][] access:
         bracket_proxy<Array2D, T> operator[](int r){
             return bracket_proxy<Array2D, T>(*this, r);

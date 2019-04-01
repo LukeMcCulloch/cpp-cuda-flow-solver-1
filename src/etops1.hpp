@@ -118,7 +118,7 @@ class MatMult {
 
   public:
 
-  
+
     // constructor initializes references to operands
     MatMult (OP1 const& a, OP2 const& b)
      : op1(a), op2(b) {
@@ -126,9 +126,15 @@ class MatMult {
 
 
     // compute product when value requested
-    T operator() (size_t i, size_t j) const {
-        return op1(i,j) * op2(i,j);
-    }
+    // T operator() (size_t i, size_t j) const {
+    //     OP1 result = matmul(op1 , op2) ;
+    //     return result(i,j);
+    // }
+
+    // // compute product when value requested
+    // OP1 matmul (OP1 const& a, OP2 const& b) {
+    //     return matmul(op1 , op2) ;
+    // }
 
     // size is maximum size
     size_t size() const {

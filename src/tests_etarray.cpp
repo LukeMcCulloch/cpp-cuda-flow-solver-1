@@ -38,21 +38,23 @@ int etarraybasic (){
     for (int i=0; i<np; ++i) {
          for (int j=0; j<np; ++j) {
             x(i,j) = static_cast <double>(i*(j+1));
-            x(i,j) = x(i,j) + 5.;
+            x(i,j) = 1.;//x(i,j) + 5.;
             y(i,j) = x(i,j)+x(i,j);
             z(i,j) = x(i,j)+y(i,j);
          }
     }
     //...
     
-    std::cout << "x: ";
-    print(x);
 
     std::cout << "y: ";
     print(y);
 
     std::cout << "z: ";
     print(z);
+
+    //z = matmul(x,y);
+    //std::cout << "after z=matmul(x,y) ";
+    //print(z);
 
     std::cout << "z = y + x: \n";
     std::cout.flush();
