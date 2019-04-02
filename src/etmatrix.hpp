@@ -15,6 +15,7 @@ class Array {
     Rep expr_rep;   // (access to) the data of the array
 
   public:
+    //Rep expr_rep; 
     // create array with initial size
     explicit Array (size_t s, size_t t)
      : expr_rep(s,t) {
@@ -25,9 +26,20 @@ class Array {
      : expr_rep(rb) {
     }
 
+    // default constructor:
+    Array(){}
 
+    SetArray(size_t s, size_t t){
+        expr_rep.buildWithParameters(s,t);
+    }
 
+    // MatMult is friend:
+    //template < T, typename OP1, typename OP2>
+    //friend class MatMult;
 
+    void set_array(const Rep& val ){
+        expr_rep = val;
+    }
     // assignment operator for same type
     Array& operator=(Array const& b) { 
         assert(size()==b.size());

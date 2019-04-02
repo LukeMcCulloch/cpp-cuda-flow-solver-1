@@ -116,6 +116,7 @@ class Array2D{
 
         //methods:
         void build();
+        void buildWithParameters(int, int);
         //void initialize();
         void setonce( T data);
         void print();
@@ -173,9 +174,16 @@ Array2D<T>::Array2D(){
 
 template <class T>
 void Array2D<T>::build(){
-    int j = 0;
     storage_size = nrows*ncols;
     array = new T[storage_size];
+};
+
+
+template <class T>
+void Array2D<T>::buildWithParameters(int numrows, int numcols){
+    nrows = numrows;
+    ncols = numcols;
+    build();
 };
 
 
