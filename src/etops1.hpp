@@ -133,7 +133,6 @@ class MatMult {
       result2.SetArray(op1.getnrows(), op2.getncols());
       //matmul(op1,op2,result2.expr_rep);
 
-      //result2.expr_rep = matmul(op1,op2);
       result2.set_array(matmul(op1,op2));
     }
 
@@ -148,7 +147,6 @@ class MatMult {
     //   return temp;
     // }
 
-    
     // result is cached.  return when requested
     T operator() (size_t i, size_t j) const {
       return result2(i,j);

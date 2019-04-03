@@ -53,6 +53,17 @@ class Array {
         return *this;
     }
 
+    Array& operator=(const T a) {
+        int nrows = getnrows();
+        int ncols = getncols();
+        for (int i = 0; i<nrows; ++i) {
+            for (int j = 0; j<ncols; ++j) {
+                expr_rep(i,j) = a;
+            }
+        }
+        return *this;
+    }
+
     // assignment operator for arrays of different type
     template<typename T2, typename Rep2>
     Array& operator=(Array<T2, Rep2> const& b) { 

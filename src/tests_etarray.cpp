@@ -7,8 +7,8 @@
 #include "etmatrix.hpp"
 #include "etops2.hpp"
 
-#include "array_template.hpp"
-#include "arrayops.hpp"
+//#include "array_template.hpp"
+//#include "arrayops.hpp"
 
 using namespace std;
 
@@ -31,9 +31,9 @@ void print (T const& c){
 int etarraybasic (){
 
     int np = 3;
-    Array<double> a(np,np), b(np,np), c(np,np);
+    Array<double> a(np,np), b(np,np), c(np,np), d(np,np);
 
-    Array2D<double> x(np,np), y(np,np), z(np,np);
+    //Array2D<double> x(np,np), y(np,np), z(np,np);
 
     // initialize arrays with some values
     for (int i=0; i<np; ++i) {
@@ -43,10 +43,10 @@ int etarraybasic (){
             b(i,j) = a(i,j)+a(i,j);
             c(i,j) = a(i,j)+b(i,j);
 
-            x(i,j) = static_cast <double>(i*(j+1));
-            x(i,j) = 1.;//x(i,j) + 5.;
-            y(i,j) = x(i,j)+x(i,j);
-            z(i,j) = x(i,j)+y(i,j);
+            // x(i,j) = static_cast <double>(i*(j+1));
+            // x(i,j) = 1.;//x(i,j) + 5.;
+            // y(i,j) = x(i,j)+x(i,j);
+            // z(i,j) = x(i,j)+y(i,j);
          }
     }
     //...
@@ -61,6 +61,7 @@ int etarraybasic (){
     c = matmul(a,b);
     std::cout << "after c=matmul(a,b) ";
     print(c);
+    d = 1.;
 
     // illegal mixing, need type match:
     // z = matmul(a,x);
@@ -90,7 +91,36 @@ int etarraybasic (){
 
     a = b;
     std::cout << "after a = b: ";
+    print(b);
     print(a);
+
+    c = (a*b)+c;
+    std::cout << "after c= a*b+c ";
+    print(c);
+    
+    c=1.;
+    c = matmul(d,c);
+    std::cout << "after c=matmul(d,c) ";
+    print(c);
+    
+    
+    std::cout << "b: ";
+    print(b);
+    d = .5*b;
+    c = matmul(d,c);
+    //c = matmul((.5*b),c);
+    std::cout << "after c=matmul((1.+b),c) ";
+    print(c);
+
+    b=1;
+    
+    c=1.;
+    c = matmul(b,c);
+    std::cout << "after b=1.;c=1; c=matmul(b,c); c:";
+    print(c);
+
+
+
     return 0;
 
 }
