@@ -29,7 +29,7 @@ class Array {
     // default constructor:
     Array(){}
 
-    SetArray(size_t s, size_t t){
+    void SetArray(size_t s, size_t t){
         expr_rep.buildWithParameters(s,t);
     }
 
