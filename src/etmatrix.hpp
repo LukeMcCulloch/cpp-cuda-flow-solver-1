@@ -15,6 +15,8 @@ class Array {
     Rep expr_rep;   // (access to) the data of the array
 
   public:
+    bool iscached = 1;
+    bool evalme = 0;
     //Rep expr_rep; 
     // create array with initial size
     explicit Array (size_t s, size_t t)
@@ -29,6 +31,8 @@ class Array {
     // default constructor:
     Array(){}
 
+
+
     void SetArray(size_t s, size_t t){
         expr_rep.buildWithParameters(s,t);
     }
@@ -37,9 +41,17 @@ class Array {
     //template < T, typename OP1, typename OP2>
     //friend class MatMult;
 
+    
+    // evaluate expressions:
+    void evaluate_set(){
+
+    }
+
     void set_array(const Rep& val ){
         expr_rep = val;
     }
+
+
     // assignment operator for same type
     Array& operator=(Array const& b) { 
         assert(size()==b.size());
@@ -85,6 +97,15 @@ class Array {
     size_t size() const { return expr_rep.size();}
 
 
+    void cache() const {}
+
+    // Array& val() const {
+    //     return *this;
+    // }
+
+    Rep& val() const {
+        return *expr_rep.val();
+    }
 
     // parens ops:
     T operator()(size_t i, size_t j) const {

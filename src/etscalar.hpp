@@ -5,6 +5,8 @@ class A_Scalar {
     T const& s;  // value of the scalar
 
   public:
+    mutable bool iscached = 1;
+    bool evalme = 0;
     // constructor initializes value
     A_Scalar (T const& v)
      : s(v) {
@@ -15,6 +17,12 @@ class A_Scalar {
         return s;
     }
 
+
+    void cache() const {}
+
+    T val() const {
+      return s;
+    }
     
     // for index operations the scalar is the value of each element
     // match () 1D access.

@@ -122,6 +122,14 @@ class Array2D{
         void print();
 
        
+        void cache() const {}
+
+        // Array2D& val() const {
+        //     return *this;
+        // }
+        Array2D<T> val() const {
+            return *this;
+        }
 
         //
         size_t getnrows() const {

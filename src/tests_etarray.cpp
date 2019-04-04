@@ -108,7 +108,7 @@ int etarraybasic (){
     print(b);
     d = .5*b;
     c = matmul(d,c);
-    //c = matmul((.5*b),c);
+    //c = matmul(c+b,d); //still no support for combined & cached terms
     std::cout << "after c=matmul((1.+b),c) ";
     print(c);
 

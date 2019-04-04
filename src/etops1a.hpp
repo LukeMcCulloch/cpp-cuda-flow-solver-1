@@ -13,4 +13,5 @@ template <typename T>
 class A_Traits<A_Scalar<T> > {
   public:
     typedef A_Scalar<T> ExprRef;  // type to refer to is ordinary value
+
 };
