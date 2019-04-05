@@ -39,9 +39,21 @@ class A_Add {
 
 
     void cache() const {
+      int nrows = op1.getnrows();
+      int ncols = op1.getncols();
+
       val_.SetArray(op1.getnrows(), op2.getncols());
       op1.cache(); op2.cache();
-      val_ = op1.val() + op2.val();
+
+      
+
+      for (size_t i = 0; i < nrows; i++) {
+          for (size_t j = 0; j < ncols; j++) {
+            val_(i,j) = op1(i,j) + op2(i,j);
+          }
+      }
+      //val_ = op1.val() + op2.val();
+      
       //iscached =1;
     }
 

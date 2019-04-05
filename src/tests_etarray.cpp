@@ -75,49 +75,53 @@ int etarraybasic (){
     std::cout.flush();
     print(c);
     
-    a = 1.2 * a;  //eapression template supports scalars
-    std::cout << "1.2*a ";
-    print(a);
+    // a = 1.2 * a;  //eapression template supports scalars
+    // std::cout << "1.2*a ";
+    // print(a);
 
-    std::cout << "a = c * a";
-    a = c * a;
-    print(a);
-    std::cout << "a = c * a: ";
-    print(a);
+    // std::cout << "a = c * a";
+    // a = c * a;
+    // print(a);
+    // std::cout << "a = c * a: ";
+    // print(a);
 
-    a = 1.2*a + a*b;
-    std::cout << "1.2*a + a*b: ";
-    print(a);
+    // a = 1.2*a + a*b;
+    // std::cout << "1.2*a + a*b: ";
+    // print(a);
 
-    a = b;
-    std::cout << "after a = b: ";
-    print(b);
-    print(a);
+    // a = b;
+    // std::cout << "after a = b: ";
+    // print(b);
+    // print(a);
 
-    c = (a*b)+c;
-    std::cout << "after c= a*b+c ";
+    // c = (a*b)+c;
+    // std::cout << "after c= a*b+c ";
+    // print(c);
+
+    c = (a+b)+c;
+    std::cout << "after c= (a+b)+c ";
     print(c);
     
-    c=1.;
-    c = matmul(d,c);
-    std::cout << "after c=matmul(d,c) ";
-    print(c);
+    // c=1.;
+    // c = matmul(d,c);
+    // std::cout << "after c=matmul(d,c) ";
+    // print(c);
     
     
-    std::cout << "b: ";
-    print(b);
-    d = .5*b;
-    c = matmul(d,c);
-    //c = matmul(c+b,d); //still no support for combined & cached terms
-    std::cout << "after c=matmul((1.+b),c) ";
-    print(c);
+    // std::cout << "b: ";
+    // print(b);
+    // d = .5*b;
+    // c = matmul(d,c);
+    // //c = matmul(c+b,d); //still no support for combined & cached terms
+    // std::cout << "after c=matmul((1.+b),c) ";
+    // print(c);
 
-    b=1;
+    // b=1;
     
-    c=1.;
-    c = matmul(b,c);
-    std::cout << "after b=1.;c=1; c=matmul(b,c); c:";
-    print(c);
+    // c=1.;
+    // c = matmul(b,c);
+    // std::cout << "after b=1.;c=1; c=matmul(b,c); c:";
+    // print(c);
 
 
 
