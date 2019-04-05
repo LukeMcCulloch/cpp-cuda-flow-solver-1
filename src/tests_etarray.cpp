@@ -69,6 +69,11 @@ int etarraybasic (){
     }
     //...
     
+    std::cout << "\n\n-----------------------------\n";
+    std::cout << "\n\nTesting basic array class  \n";
+    std::cout << "against  \n";
+    std::cout << "Expression Template array class  \n";
+    std::cout << "-----------------------------\n\n";
 
     std::cout << "b: ";
     print(b);
@@ -248,6 +253,15 @@ int etarraybasic (){
     compare(c,z,"matmul");
 
 
+    
+    std::cout << "\n\n-----------------------------\n";
+    std::cout << "\n\nTesting basic array class  \n";
+    std::cout << "against  \n";
+    std::cout << "Expression Template array class  \n";
+
+    std::cout << "result:  \n";
+    std::cout << "         all tests pass  \n";
+    std::cout << "-----------------------------\n\n";
 
     return 0;
 
