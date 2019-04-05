@@ -45,7 +45,7 @@ class A_Add {
       val_.SetArray(op1.getnrows(), op2.getncols());
       op1.cache(); op2.cache();
 
-      
+      val_ = 0.;
 
       for (size_t i = 0; i < nrows; i++) {
           for (size_t j = 0; j < ncols; j++) {
@@ -139,6 +139,8 @@ class A_Mult {
       val_.SetArray(op1.getnrows(), op2.getncols());
       op1.cache(); op2.cache();
 
+      val_ = 0.;
+
       for (size_t i = 0; i < nrows; i++) {
           for (size_t j = 0; j < ncols; j++) {
             val_(i,j) = op1(i,j) + op2(i,j);
@@ -219,6 +221,7 @@ class MatMult {
       val_.SetArray(op1.getnrows(), op2.getncols());
       op1.cache(); op2.cache();
 
+      val_ = 0.;
       
       for (size_t i = 0; i < nrows; i++) {
           for (size_t k = 0; k < ncols; k++) {

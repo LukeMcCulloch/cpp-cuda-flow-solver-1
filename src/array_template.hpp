@@ -99,9 +99,9 @@ class Array2D{
         // explicit constructor declaring size nrow,ncol:
         explicit Array2D(int numrows, int numcols): 
                         nrows(numrows), ncols(numcols){
-            cout << "building \n" << endl;
+            //cout << "building \n" << endl;
             build();
-            cout << "built \n" << endl;
+            //cout << "built \n" << endl;
             //initialize();
             //cout << "initialized \n" << endl;
         }

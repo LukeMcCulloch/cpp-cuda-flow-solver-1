@@ -7,8 +7,8 @@
 #include "etmatrix.hpp"
 #include "etops2.hpp"
 
-//#include "array_template.hpp"
-//#include "arrayops.hpp"
+#include "array_template.hpp"
+#include "arrayops.hpp"
 
 using namespace std;
 
@@ -27,13 +27,31 @@ void print (T const& c){
     std::cout << "\ndone \n" << std::endl;
 }
 
+template <typename T, typename R>
+void compare (T const& c, R const& z, 
+                const std::string& input){
+    // this pass makes a copy ;-)
+
+    int ncols = c.getncols();
+    int nrows = c.getnrows();
+    std::cout << "checking simple " << input <<"\n";
+    for (size_t i = 0; i < nrows; i++) {
+        for (size_t j = 0; j < ncols; j++) {
+            assert( c(i,j) == z(i,j) );
+        }
+    }
+    std::cout << "simple " <<  input <<" OK \n\n";
+}
+
 
 int etarraybasic (){
 
     int np = 3;
+    int nrows = np;
+    int ncols = np;
     Array<double> a(np,np), b(np,np), c(np,np), d(np,np);
 
-    //Array2D<double> x(np,np), y(np,np), z(np,np);
+    Array2D<double> x(np,np), y(np,np), z(np,np), w(np,np);
 
     // initialize arrays with some values
     for (int i=0; i<np; ++i) {
@@ -43,10 +61,10 @@ int etarraybasic (){
             b(i,j) = a(i,j)+a(i,j);
             c(i,j) = a(i,j)+b(i,j);
 
-            // x(i,j) = static_cast <double>(i*(j+1));
-            // x(i,j) = 1.;//x(i,j) + 5.;
-            // y(i,j) = x(i,j)+x(i,j);
-            // z(i,j) = x(i,j)+y(i,j);
+            x(i,j) = static_cast <double>(i*(j+1));
+            x(i,j) = 1.;//x(i,j) + 5.;
+            y(i,j) = x(i,j)+x(i,j);
+            z(i,j) = x(i,j)+y(i,j);
          }
     }
     //...
@@ -58,15 +76,26 @@ int etarraybasic (){
     std::cout << "c: ";
     print(c);
 
+
+    std::cout << "y: ";
+    print(y);
+
+    std::cout << "z: ";
+    print(z);
+
+
+
+    z = matmul(x,y);
+    std::cout << "xfter z=matmul(x,y) ";
+    print(z);
+    d = 1.;
+
     c = matmul(a,b);
     std::cout << "after c=matmul(a,b) ";
     print(c);
     d = 1.;
 
-    // illegal mixing, need type match:
-    // z = matmul(a,x);
-    // std::cout << "after z=matmul(a,x) ";
-    // print(z);
+    compare(c,z,"matmul");
 
     std::cout << "c = b + a: \n";
     std::cout.flush();
@@ -74,10 +103,28 @@ int etarraybasic (){
     std::cout << "c = b + a done \n";
     std::cout.flush();
     print(c);
+
+    std::cout << "z = y + x: \n";
+    std::cout.flush();
+    z = y + x;
+    std::cout << "z = y + x done \n";
+    std::cout.flush();
+    print(z);
+
+
+    compare(c,z,"elementwise addition");
+
     
-    a = 1.2 * a;  //eapression template supports scalars
+    a = 1.2 * a;  //expression template supports scalars
     std::cout << "1.2*a ";
     print(a);
+
+    x = 1.2 * x;  //expression template supports scalars
+    std::cout << "1.2*x ";
+    print(x);
+
+
+    compare(a,x,"scalar + matrix addition");
 
     std::cout << "a = c * a";
     a = c * a;
@@ -85,36 +132,102 @@ int etarraybasic (){
     std::cout << "a = c * a: ";
     print(a);
 
+
+    std::cout << "x = z * x";
+    x = z * x;
+    print(x);
+    std::cout << "x = z * x: ";
+    print(x);
+
+    compare(a,x,"elementwise matrix multiplication");
+
+
     a = 1.2*a + a*b;
     std::cout << "1.2*a + a*b: ";
     print(a);
+
+
+    x = 1.2*x + x*y;
+    std::cout << "1.2*x + x*y: ";
+    print(x);
+
+    compare(a,x,"scalar * matrix multiplication");
 
     a = b;
     std::cout << "after a = b: ";
     print(b);
     print(a);
 
+    x = y;
+    std::cout << "xfter x = y: ";
+    print(y);
+    print(x);
+
+    compare(a,y,"crossed eualtiy");
+    compare(b,x,"crossed equality");
+
     c = (a*b)+c;
     std::cout << "after c= (a*b)+c ";
     print(c);
+
+
+    z = (x*y)+z;
+    std::cout << "xfter z= (x*y)+z ";
+    print(z);
+    compare(c,z,"(mat * mat) + mat combined");
+
 
     c = (a+b)+c;
     std::cout << "after c= (a+b)+c ";
     print(c);
     
-    c=1.;
+    z = (x+y)+z;
+    std::cout << "xfter z= (x+y)+z ";
+    print(z);
+
+    compare(c,z,"(mat + mat) + mat combined");
+
+
+    d=1.;
     c = matmul(d,c);
     std::cout << "after c=matmul(d,c) ";
     print(c);
+
+    w=1.;
+    z = matmul(w,z);
+    std::cout << "xfter z=matmul(w,z) ";
+    print(z);
     
+    compare(c,z,"(matmul");
     
+
+
+
     std::cout << "b: ";
     print(b);
-    d = .5*b;
-    c = matmul(d,c);
-    c = matmul(c+b,d); //still no support for combined & cached terms
+    //d = .5*b;
+    compare(b,y,"b,y");
+
+    //c = matmul(d,c);
+    c = matmul((c+.5*d),d); //still no support for combined & cached terms
     std::cout << "after c=matmul((1.+b),c) ";
     print(c);
+
+    
+    std::cout << "y: ";
+    print(y);
+    //w = .5*y;
+    compare(d,w,"d,w");
+
+    //z = matmul(w,z);
+    z = matmul((z+.5*w),w); //still no support for zomyinew & zxzhew terms
+    std::cout << "xfter z=matmul((1.+y),z) ";
+    print(z);
+
+
+    compare(c,z,"compound mat + (scalar * mat )matmul mat");
+
+
 
     b=1;
     
@@ -122,6 +235,17 @@ int etarraybasic (){
     c = matmul(b,c);
     std::cout << "after b=1.;c=1; c=matmul(b,c); c:";
     print(c);
+
+
+    y=1;
+    
+    z=1.;
+    z = matmul(y,z);
+    std::cout << "xfter y=1.;z=1; z=matmul(y,z); z:";
+    print(z);
+
+
+    compare(c,z,"matmul");
 
 
 
