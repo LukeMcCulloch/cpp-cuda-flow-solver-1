@@ -6,8 +6,9 @@
 #include "array_template.hpp"
 #include "SolverManager.hpp"
 #include "input.hpp"
-#include "tests_array.hpp"
+#include "geometry.hpp"
 
+#include "tests_array.hpp"
 #include "tests_etarray.hpp"
 
 using namespace std;

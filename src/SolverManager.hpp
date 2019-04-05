@@ -5,7 +5,10 @@
 #define __SOLVERMANAGER_INCLUDED__
 
 //#include "input.hpp"
+//#include "geometry.hpp"
 
+
+using namespace std;
 
 class SolverManager{
 
@@ -13,7 +16,9 @@ class SolverManager{
 
         void input_discrete(int argc, char **argv);
         void driver(int argc, char **argv);
+        void plate();
         void startMessage();
+        
 
     private:
 
@@ -35,6 +40,9 @@ void SolverManager::driver(int argc, char *argv[]){
     startMessage();
 
     input_discrete(argc, argv);
+
+    cout << "Hello plate?" << endl;
+    plate();
     
 }
 
@@ -46,5 +54,7 @@ void SolverManager::startMessage(){
     cout << "Soving the 2D NSE SFVF for Cavity Flow" << endl;
     cout << "-------------------------------------------" ;
 }
+
+
 
 #endif //__TESTS_ARRAY_INCLUDED__
