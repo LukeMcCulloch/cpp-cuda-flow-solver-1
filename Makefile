@@ -5,7 +5,8 @@
 #
 
 FXX = gfortran
-CXX = g++
+#CXX = g++
+CXX = nvcc
 CFLAGS =  -Wall #Wall: warn all unused variables
 LDFLAGS =
 
@@ -27,12 +28,12 @@ OBJECTS = main.o tests_array.o tests_etarray.o
 $(BUILD_DIR)/solver: 	$(ODIR)/main.o  \
 						$(ODIR)/tests_array.o \
 						$(ODIR)/tests_etarray.o 
-	g++ -g 	$(ODIR)/main.o $(ODIR)/tests_array.o $(ODIR)/tests_etarray.o -o $(BUILD_DIR)/solver -lm
+	$(CXX) -g 	$(ODIR)/main.o $(ODIR)/tests_array.o $(ODIR)/tests_etarray.o -o $(BUILD_DIR)/solver -lm
 
 
 
 $(BUILD_DIR)/main.o: 	$(SRC_DIRS)/main.cpp  
-	g++ -g -c main.cpp
+	$(CXX) -g -c main.cpp
 
 
 # expression template testing:

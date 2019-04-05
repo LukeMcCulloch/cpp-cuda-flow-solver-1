@@ -2,6 +2,13 @@
 #include <iostream>
 #include <limits>
 
+#include <cmath>
+
+
+#include <stdio.h>
+#include "../common/common.h"
+#include <cuda_runtime.h>
+
 #include "etops1.hpp"
 #include "etscalar.hpp"
 #include "etmatrix.hpp"
@@ -10,7 +17,43 @@
 #include "array_template.hpp"
 #include "arrayops.hpp"
 
+
+
 using namespace std;
+
+
+const int THREADWORK = 2;
+//const int THREADWORK = 1024;// << 5;
+//const int THREADWORK = 1 << 12;
+
+const int maxThreads = 1 << 20;
+
+
+
+// void checkResult(float *hostRef, float *gpuRef, const int N){
+    
+//     double epsilon = 1.0E-8;
+//     bool match = 1;
+
+//     for (int i = 0; i < N; i++){
+
+//         if (abs(hostRef[i] - gpuRef[i]) > epsilon){
+        
+//             match = 0;
+//             printf("Arrays do not match!\n");
+//             printf("host %5.2f gpu %5.2f at current %d\n", hostRef[i],
+//                    gpuRef[i], i);
+//             break;
+//         }//else{
+//           //  printf("host %5.2f gpu %5.2f at current %d\n", hostRef[i],
+//             //       gpuRef[i], i);
+//         //}
+//     }
+
+//     if (match) printf("Arrays match.\n\n");
+
+//     return;
+// }
 
 
 template <typename T>
@@ -30,7 +73,7 @@ void print (T const& c){
 template <typename T, typename R>
 void compare (T const& c, R const& z, 
                 const std::string& input){
-    // this pass makes a copy ;-)
+    // this string pass makes a copy ;-)
 
     int ncols = c.getncols();
     int nrows = c.getnrows();
@@ -44,9 +87,107 @@ void compare (T const& c, R const& z,
 }
 
 
+
+
+// __global__ void sumArraysOnGPU(float *A, float *B, float *C, const int N){
+
+//     // 1D general case: keeps working when arrays get big:
+//     int i = blockIdx.x * blockDim.x + threadIdx.x;
+//     while (i < N){ 
+//         C[i] = A[i] + B[i];
+//         i += blockDim.x*gridDim.x;
+//     }
+// }
+
+
+void devprops(int dev, 
+                int driverVersion, 
+                int runtimeVersion,
+                cudaDeviceProp deviceProp){
+cudaDriverGetVersion(&driverVersion);
+    cudaRuntimeGetVersion(&runtimeVersion);
+    printf("  CUDA Driver Version / Runtime Version          %d.%d / %d.%d\n",
+           driverVersion / 1000, (driverVersion % 100) / 10,
+           runtimeVersion / 1000, (runtimeVersion % 100) / 10);
+    printf("  CUDA Capability Major/Minor version number:    %d.%d\n",
+           deviceProp.major, deviceProp.minor);
+    printf("  Total amount of global memory:                 %.2f GBytes (%llu "
+           "bytes)\n", (float)deviceProp.totalGlobalMem / pow(1024.0, 3),
+           (unsigned long long)deviceProp.totalGlobalMem);
+    printf("  GPU Clock rate:                                %.0f MHz (%0.2f "
+           "GHz)\n", deviceProp.clockRate * 1e-3f,
+           deviceProp.clockRate * 1e-6f);
+    printf("  Memory Clock rate:                             %.0f Mhz\n",
+           deviceProp.memoryClockRate * 1e-3f);
+    printf("  Memory Bus Width:                              %d-bit\n",
+           deviceProp.memoryBusWidth);
+
+    if (deviceProp.l2CacheSize)
+    {
+        printf("  L2 Cache Size:                                 %d bytes\n",
+               deviceProp.l2CacheSize);
+    }
+
+    printf("  Max Texture Dimension Size (x,y,z)             1D=(%d), "
+           "2D=(%d,%d), 3D=(%d,%d,%d)\n", deviceProp.maxTexture1D,
+           deviceProp.maxTexture2D[0], deviceProp.maxTexture2D[1],
+           deviceProp.maxTexture3D[0], deviceProp.maxTexture3D[1],
+           deviceProp.maxTexture3D[2]);
+    printf("  Max Layered Texture Size (dim) x layers        1D=(%d) x %d, "
+           "2D=(%d,%d) x %d\n", deviceProp.maxTexture1DLayered[0],
+           deviceProp.maxTexture1DLayered[1], deviceProp.maxTexture2DLayered[0],
+           deviceProp.maxTexture2DLayered[1],
+           deviceProp.maxTexture2DLayered[2]);
+    printf("  Total amount of constant memory:               %lu bytes\n",
+           deviceProp.totalConstMem);
+    printf("  Total amount of shared memory per block:       %lu bytes\n",
+           deviceProp.sharedMemPerBlock);
+    printf("  Total number of registers available per block: %d\n",
+           deviceProp.regsPerBlock);
+    printf("  Warp size:                                     %d\n",
+           deviceProp.warpSize);
+    printf("  Maximum number of threads per multiprocessor:  %d\n",
+           deviceProp.maxThreadsPerMultiProcessor);
+    printf("  Maximum number of threads per block:           %d\n",
+           deviceProp.maxThreadsPerBlock);
+    printf("  Maximum sizes of each dimension of a block:    %d x %d x %d\n",
+           deviceProp.maxThreadsDim[0],
+           deviceProp.maxThreadsDim[1],
+           deviceProp.maxThreadsDim[2]);
+    printf("  Maximum sizes of each dimension of a grid:     %d x %d x %d\n",
+           deviceProp.maxGridSize[0],
+           deviceProp.maxGridSize[1],
+           deviceProp.maxGridSize[2]);
+    printf("  Maximum memory pitch:                          %lu bytes\n",
+           deviceProp.memPitch);
+    exit(EXIT_SUCCESS);
+}
+
+__global__ void helloFromGPU(){
+    
+    printf("Hello World from GPU!\n");
+}
+// __global__ void helloFromGPUthread(){
+
+//     int i = threadIdx.x;
+//     printf("Hellow World GPU id %d \n", i);
+//}
+
+
 int etarraybasic (){
 
-    int np = 3;
+
+    /* set up device: 
+       nvcc required! */
+    int dev = 0, driverVersion = 0, runtimeVersion = 0;
+    cudaDeviceProp deviceProp;
+    CHECK(cudaGetDeviceProperties(&deviceProp, dev));
+    printf("Using Device %d: %s\n", dev, deviceProp.name);
+    CHECK(cudaSetDevice(dev));
+
+
+
+    int np = 5;
     int nrows = np;
     int ncols = np;
     Array<double> a(np,np), b(np,np), c(np,np), d(np,np);
@@ -262,6 +403,16 @@ int etarraybasic (){
     std::cout << "result:  \n";
     std::cout << "         all tests pass  \n";
     std::cout << "-----------------------------\n\n";
+
+
+    // printf("---------------------\n");
+    // // GPU call:
+    // helloFromGPU<<<1, 10>>>();
+    // //CHECK(cudaDeviceSynchronize());
+    // helloFromGPUthread<<<1, 10>>>();
+    // CHECK(cudaDeviceReset());
+    // printf("---------------------\n");
+
 
     return 0;
 

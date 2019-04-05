@@ -121,6 +121,19 @@ class Array {
         //return expr_rep.array[i*getncols() + j];
         return expr_rep(i,j);
     }
+    
+    T operator()(size_t i) const {
+        assert(i<size());
+        //return expr_rep[i*getncols() + j];
+        return expr_rep(i);
+    }
+    // self uses this!
+    T& operator()(size_t i) {
+        assert(i<size());
+        //return expr_rep.array[i*getncols() + j];
+        return expr_rep(i);
+    }
+
 
     // index operator for constants and variables
     // TODO:

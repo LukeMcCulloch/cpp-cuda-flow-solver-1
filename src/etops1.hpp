@@ -1,5 +1,4 @@
-
-
+#pragma once
 
 
 #include <stddef.h>
@@ -10,6 +9,10 @@
 #include "etops1a.hpp"
 #include "etmatrix.hpp"
 
+//#include "elementwise_add.hpp"
+
+
+#include <cuda_runtime.h>
 
 
 using namespace std;
@@ -37,6 +40,35 @@ class A_Add {
       //iscached =1;
     }
 
+    //void sum1(int,int) const;
+    void  sum1(int nrows, int ncols) const{
+
+      for (size_t i = 0; i < nrows; i++) {
+          for (size_t j = 0; j < ncols; j++) {
+            val_(i,j) = op1(i,j) + op2(i,j);
+          }
+      }
+    }
+
+    void  sum2(int nrows, int ncols) const{
+      const int N = op1.size();
+      for (size_t i = 0; i < N; i++) {
+            val_(i) = op1(i) + op2(i);
+          }
+    }
+
+
+    // __global__ void sumArraysOnGPU(int nrows, int ncols){
+    //     const int N = nrows*ncols;
+
+    //     // 1D general case: keeps working when arrays get big!
+    //     int i = blockIdx.x * blockDim.x + threadIdx.x;
+    //     while (i < N){ 
+    //         val_[i] = op1(i) + op1(i);
+    //         i += blockDim.x*gridDim.x;
+    //     }
+    // }
+
 
     void cache() const {
       int nrows = op1.getnrows();
@@ -46,12 +78,9 @@ class A_Add {
       op1.cache(); op2.cache();
 
       val_ = 0.;
+      //sum1(nrows,ncols);
+      sum2(nrows,ncols);
 
-      for (size_t i = 0; i < nrows; i++) {
-          for (size_t j = 0; j < ncols; j++) {
-            val_(i,j) = op1(i,j) + op2(i,j);
-          }
-      }
       //val_ = op1.val() + op2.val();
       
       //iscached =1;
@@ -104,6 +133,17 @@ class A_Add {
       // }
 
 };
+
+// template <typename T, typename OP1, typename OP2>
+// void  A_Add::sum1(int nrows, int ncols) const{
+
+//   for (size_t i = 0; i < nrows; i++) {
+//       for (size_t j = 0; j < ncols; j++) {
+//           val_(i,j) = op1(i,j) + op2(i,j);
+//       }
+//   }
+
+// }
 
 
 
@@ -162,6 +202,14 @@ class A_Mult {
       }
       else{
         return op1(i,j) * op2(i,j);
+      }
+    }
+    T operator() (size_t i) const {
+      if (iscached==1){
+        return val_(i);
+      }
+      else{
+        return op1(i) * op2(i);
       }
     }
 
