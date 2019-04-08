@@ -14,3 +14,6 @@ solver (or matmul method in the basic case) selection.  Coming soon.
 
 The plan is to allow for switching between fast numerical libraries such as Eigen, and hand rolled 
 expression templates on the C++ side, and between, ... thrust, cuBlas, etc., and hand rolled CUDA on the GPU side.  By doing this I hope to increase my proficiency with all the components involved.
+
+
+NOTE:  since switching to nvcc, this code has suddenly become invalid for Windows.  I will see if I can fix this if I have any time to look at it this week.
