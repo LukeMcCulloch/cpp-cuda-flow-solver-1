@@ -100,11 +100,12 @@ void compare (T const& c, R const& z,
 // }
 
 
+
 void devprops(int dev, 
                 int driverVersion, 
                 int runtimeVersion,
                 cudaDeviceProp deviceProp){
-cudaDriverGetVersion(&driverVersion);
+    cudaDriverGetVersion(&driverVersion);
     cudaRuntimeGetVersion(&runtimeVersion);
     printf("  CUDA Driver Version / Runtime Version          %d.%d / %d.%d\n",
            driverVersion / 1000, (driverVersion % 100) / 10,
