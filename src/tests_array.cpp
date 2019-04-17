@@ -8,6 +8,7 @@
 // #include "etmxtrix.hpp"
 // #include "etops2.hpp"
 
+#include "tests_array.hpp"
 #include "array_template.hpp"
 #include "arrayops.hpp"
 

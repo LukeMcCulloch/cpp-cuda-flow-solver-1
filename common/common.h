@@ -1,4 +1,13 @@
-#include <sys/time.h>
+#if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
+    #include "win_time.h"
+    //const auto& timezone = timezone2;
+    //const auto& timeval2 = timeval2;
+    //typedef timezone timezone2;
+    //typedef timeval timeval2;
+#else
+    #include <sys/time.h>
+#endif
+
 
 #ifndef _COMMON_H
 #define _COMMON_H

@@ -11,7 +11,7 @@
 
 //=================================
 // the actual function
-void arraybasic();
+int arraybasic();
 
 // class TestArray:
 //     public BaseTest01<float, float, 
