@@ -243,7 +243,7 @@ template <class T>
 Array2D<T> Array2D<T>::operator=(const Array2D& that) {
 	assert(that.nrows == nrows);
 	assert(that.ncols == ncols);
-    int i, j;
+    int i;
     for(i=0; i < storage_size; i++) {
     	array[i] = that.array[i];
     }
@@ -251,7 +251,7 @@ Array2D<T> Array2D<T>::operator=(const Array2D& that) {
 }
 template <class T>
 Array2D<T> Array2D<T>::operator=(const T a) {
-    int i, j;
+    int i;
     for(i=0; i < storage_size; i++) {
     	array[i] = a;
     }

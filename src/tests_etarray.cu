@@ -9,6 +9,16 @@
 #include "../common/common.h"
 #include <cuda_runtime.h>
 
+// #include "../src/etops1.hpp"
+// #include "../src/etscalar.hpp"
+// #include "../src/etmatrix.hpp"
+// #include "../src/etops2.hpp"
+
+// #include "../src/array_template.hpp"
+// #include "../src/arrayops.hpp"
+// #include "../src/tests_etarray.hpp"
+
+
 #include "etops1.hpp"
 #include "etscalar.hpp"
 #include "etmatrix.hpp"
@@ -16,17 +26,17 @@
 
 #include "array_template.hpp"
 #include "arrayops.hpp"
-
-
+#include "tests_etarray.hpp"
 
 using namespace std;
 
 
-const int THREADWORK = 2;
+//const int THREADWORK = 2;
+
 //const int THREADWORK = 1024;// << 5;
 //const int THREADWORK = 1 << 12;
 
-const int maxThreads = 1 << 20;
+//const int maxThreads = 1 << 20;
 
 
 
@@ -100,6 +110,23 @@ void compare (T const& c, R const& z,
 // }
 
 
+__global__ void helloFromGPUthread(){
+
+    int i = threadIdx.x;
+    printf("Hellow World GPU id %d \n", i);
+}
+
+void helloFromCpu(){
+
+    printf("---------------------\n");
+    for (int i =0; i<1; i++)
+    {
+        printf("Hello World from CPU!\n");
+    }
+    printf("---------------------\n");
+}
+
+
 
 void devprops(int dev, 
                 int driverVersion, 
@@ -164,15 +191,6 @@ void devprops(int dev,
     exit(EXIT_SUCCESS);
 }
 
-__global__ void helloFromGPU(){
-    
-    printf("Hello World from GPU!\n");
-}
-// __global__ void helloFromGPUthread(){
-
-//     int i = threadIdx.x;
-//     printf("Hellow World GPU id %d \n", i);
-//}
 
 
 int etarraybasic (){
@@ -180,17 +198,17 @@ int etarraybasic (){
 
     /* set up device: 
        nvcc required! */
-    int dev = 0, driverVersion = 0, runtimeVersion = 0;
-    cudaDeviceProp deviceProp;
-    CHECK(cudaGetDeviceProperties(&deviceProp, dev));
-    printf("Using Device %d: %s\n", dev, deviceProp.name);
-    CHECK(cudaSetDevice(dev));
+//     int dev = 0, driverVersion = 0, runtimeVersion = 0;
+//     cudaDeviceProp deviceProp;
+//     CHECK(cudaGetDeviceProperties(&deviceProp, dev));
+//     printf("Using Device %d: %s\n", dev, deviceProp.name);
+//     CHECK(cudaSetDevice(dev));
 
 
 
     int np = 5;
-    int nrows = np;
-    int ncols = np;
+    //int nrows = np;
+    //int ncols = np;
     Array<double> a(np,np), b(np,np), c(np,np), d(np,np);
 
     Array2D<double> x(np,np), y(np,np), z(np,np), w(np,np);
@@ -212,10 +230,13 @@ int etarraybasic (){
     //...
     
     std::cout << "\n\n-----------------------------\n";
+    std::cout << "\n\n-----------------------------\n";
+    std::cout << "\n\n Welcome to the Test Folder! \n";
     std::cout << "\n\nTesting basic array class  \n";
     std::cout << "against  \n";
     std::cout << "Expression Template array class  \n";
     std::cout << "-----------------------------\n\n";
+    std::cout << "\n\n-----------------------------\n";
 
     std::cout << "b: ";
     print(b);
@@ -414,6 +435,11 @@ int etarraybasic (){
     // CHECK(cudaDeviceReset());
     // printf("---------------------\n");
 
+
+
+    helloFromCpu();
+    helloFromGPUthread<<<1, 10>>>();
+    CHECK(cudaDeviceReset());
 
     return 0;
 

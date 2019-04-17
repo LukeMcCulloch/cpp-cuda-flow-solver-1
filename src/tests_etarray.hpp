@@ -4,14 +4,17 @@
 #define __TESTS_ETARRAY_INCLUDED__
 
 //=================================
-// forward declared dependencies
+// gpu dependencies
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
 
-//=================================
-// included dependencies
+#include <stdio.h>
+
+
 
 //=================================
 // the actual function
-void etarraybasic();
+int etarraybasic();
 
 // class TestArray:
 //     public BaseTest01<float, float, 
