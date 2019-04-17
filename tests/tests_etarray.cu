@@ -9,24 +9,16 @@
 #include "../common/common.h"
 #include <cuda_runtime.h>
 
-// #include "../src/etops1.hpp"
-// #include "../src/etscalar.hpp"
-// #include "../src/etmatrix.hpp"
-// #include "../src/etops2.hpp"
+#include "../src/etops1.hpp"
+#include "../src/etscalar.hpp"
+#include "../src/etmatrix.hpp"
+#include "../src/etops2.hpp"
 
-// #include "../src/array_template.hpp"
-// #include "../src/arrayops.hpp"
-// #include "../src/tests_etarray.hpp"
+#include "../src/array_template.hpp"
+#include "../src/arrayops.hpp"
+#include "../src/tests_etarray.cuh"
 
 
-#include "etops1.hpp"
-#include "etscalar.hpp"
-#include "etmatrix.hpp"
-#include "etops2.hpp"
-
-#include "array_template.hpp"
-#include "arrayops.hpp"
-#include "tests_etarray.hpp"
 
 using namespace std;
 

@@ -9,7 +9,7 @@
 #include "geometry.hpp"
 
 #include "tests_array.hpp"
-#include "tests_etarray.hpp"
+#include "tests_etarray.cuh"
 
 using namespace std;
 
