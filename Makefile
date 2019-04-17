@@ -105,15 +105,15 @@ $(OBJECTS): arrayops.hpp array_template.hpp \
 .PHONY: clean
 
 
-# clean: 
-# 	-rm -f  \
-# 			$(SRC_DIRS)/*.o  \
-# 			$(BUILD_DIR)/$(EXECUTABLE)
-
 clean: 
 	-rm -f  \
-			$(SRC_DIRS)/main.o  \
-			$(SRC_DIRS)/geometry.o  \
-			$(SRC_DIRS)/tests_array.o  \
-			$(SRC_DIRS)/tests_etarray.o  \
+			$(SRC_DIRS)/*.o  \
 			$(BUILD_DIR)/$(EXECUTABLE)
+
+# clean: 
+# 	-rm -f  \
+# 			$(SRC_DIRS)/main.o  \
+# 			$(SRC_DIRS)/geometry.o  \
+# 			$(SRC_DIRS)/tests_array.o  \
+# 			$(SRC_DIRS)/tests_etarray.o  \
+# 			$(BUILD_DIR)/$(EXECUTABLE)
