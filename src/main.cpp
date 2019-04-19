@@ -11,9 +11,23 @@
 #include "tests_array.hpp"
 #include "tests_etarray.cuh"
 
+#include "../common/common.h"
+#include <cuda_runtime.h>
+#include <stdio.h>
+
 using namespace std;
 
 int main (int argc, char **argv) {
+
+
+
+    // set up cuda device
+    int dev = 0;
+    cudaDeviceProp deviceProp;
+    CHECK(cudaGetDeviceProperties(&deviceProp, dev));
+    printf("using Device %d: %s\n", dev, deviceProp.name);
+    CHECK(cudaSetDevice(dev));
+
 
     SolverManager SM = SolverManager();
     SM.driver(argc, argv);
@@ -33,6 +47,10 @@ int main (int argc, char **argv) {
         //expression tempalte (et) array basic tests
         etarraybasic();
     }
+
+
+    // reset cuda device
+    CHECK(cudaDeviceReset());
 
     return 0;
 }

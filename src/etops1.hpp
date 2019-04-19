@@ -34,7 +34,6 @@ class A_Add {
     A_Add (OP1 const& a, OP2 const& b)
      : op1(a), op2(b) {
        
-
       // testing only!:
       //cache();
       //iscached =1;
@@ -58,16 +57,37 @@ class A_Add {
     }
 
 
-    // __global__ void sumArraysOnGPU(int nrows, int ncols){
-    //     const int N = nrows*ncols;
+    __device__ __host__  
+    void sumArraysOnGPU_1Dgrid1Dblock(int nrows, int ncols)
+    {
 
-    //     // 1D general case: keeps working when arrays get big!
-    //     int i = blockIdx.x * blockDim.x + threadIdx.x;
-    //     while (i < N){ 
-    //         val_[i] = op1(i) + op1(i);
-    //         i += blockDim.x*gridDim.x;
-    //     }
-    // }
+        const int N = nrows*ncols;
+
+        // 1D general case: keeps working when arrays get big!
+        int i = blockIdx.x * blockDim.x + threadIdx.x;
+        while (i < N){ 
+            val_[i] = op1(i) + op2(i);
+            i += blockDim.x*gridDim.x; //trick  
+        }
+    }
+
+
+
+    // grid 2D block 2D
+    __device__ __host__   
+    void sumMatrixGPU_2Dgrid2Dblock(float *MatA, float *MatB, float *MatC, 
+                                     int nx,int ny)
+    {
+
+        unsigned int ix = threadIdx.x + blockIdx.x * blockDim.x;
+        unsigned int iy = threadIdx.y + blockIdx.y * blockDim.y;
+        unsigned int idx = iy * nx + ix;
+
+        if (ix < nx && iy < ny)
+        {
+            val_[idx] = op1[idx] + op2[idx];
+        }
+    }
 
 
     void cache() const {

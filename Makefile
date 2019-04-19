@@ -52,7 +52,7 @@ OBJECTS = tests_array.o tests_etarray.o main.o
 $(BUILD_DIR)/solver: 	$(SRC_DIRS)/main.o  \
 						$(SRC_DIRS)/tests_array.o \
 						$(TEST_DIR)/tests_etarray.o 
-	$(NXX) 	$(SRC_DIRS)/main.cpp $(SRC_DIRS)/tests_array.cpp $(TEST_DIR)/tests_etarray.cu -o $(BUILD_DIR)/solver 
+	$(NXX)  -x cu 	$(SRC_DIRS)/main.cpp $(SRC_DIRS)/tests_array.cpp $(TEST_DIR)/tests_etarray.cu -o $(BUILD_DIR)/solver 
 
 
 

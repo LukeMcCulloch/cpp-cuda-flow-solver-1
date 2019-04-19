@@ -4,12 +4,22 @@
 #ifndef __ARRAY_TEMPLATE_INCLUDED__
 #define __ARRAY_TEMPLATE_INCLUDED__
 
+//=================================
 // array class
 #include <cassert>
 #include <iostream>
 #include <limits>
 
+//=================================
+//CUDA:
+#include "../common/common.h"
+#include <cuda_runtime.h>
+#include <stdio.h>
+
+//=================================
 using namespace std;
+
+
 
 template <class T>
 class Array2D; //fwd declaration
@@ -52,22 +62,22 @@ class bracket_proxy{
 
 
 
-/*Helper class --- expression tempalte
+/*Helper class --- expression template (not used)
 */
-template <typename LHS, typename RHS>
-class MatrixSum{
-public:
-    using value_type = typename LHS::value_type;
+// template <typename LHS, typename RHS>
+// class MatrixSum{
+// public:
+//     using value_type = typename LHS::value_type;
 
-    MatrixSum(const LHS& lhs, const RHS& rhs) : rhs(rhs), lhs(lhs) {}
+//     MatrixSum(const LHS& lhs, const RHS& rhs) : rhs(rhs), lhs(lhs) {}
     
-    value_type operator() (int x, int y) const  {
-        return lhs(x, y) + rhs(x, y);
-    }
-private:
-    const LHS& lhs;
-    const RHS& rhs;
-};
+//     value_type operator() (int x, int y) const  {
+//         return lhs(x, y) + rhs(x, y);
+//     }
+// private:
+//     const LHS& lhs;
+//     const RHS& rhs;
+// };
 
 //MatrixSum<Matrix<double>, Matrix<double> > SumAB(a, b);
 
@@ -94,10 +104,15 @@ class Array2D{
 
 
     public:
+
+        // set up data size of matrix
         int nrows, ncols;
         int storage_size;
-        T* array;
 
+        // malloc host memory
+        T* array;
+        T* gpu_array;
+        
         // explicit constructor declaring size nrow,ncol:
         explicit Array2D(int numrows, int numcols): 
                         nrows(numrows), ncols(numcols){
@@ -169,7 +184,8 @@ class Array2D{
 
 template<class T>
 Array2D<T>::~Array2D(){
-    delete[] array;
+    CHECK(cudaFree(array));
+    //delete[] array;
 }
 
 template <class T>
@@ -186,10 +202,16 @@ Array2D<T>::Array2D(){
 
 
 
+// new array:
 template <class T>
 void Array2D<T>::build(){
     storage_size = nrows*ncols;
-    array = new T[storage_size];
+    //array = new T[storage_size];
+    cudaMallocManaged((void **)&array, storage_size*sizeof(T));
+    //CHECK(cudaMallocManaged((void **)&array, storage_size*sizeof(T)););
+    //CHECK(cudaMallocManaged(&array, storage_size*sizeof(float)););
+    //cudaMallocPitch(&array, &storage_size,
+    //            ncols * sizeof(T), nrows);
 };
 
 
@@ -206,7 +228,12 @@ template <class T>
 Array2D<T>::Array2D(const Array2D& other)
     : nrows(other.nrows), ncols(other.ncols){
     storage_size = nrows*ncols;
-    array = new T[storage_size];
+    //array = new T[storage_size];
+    //CHECK(cudaMallocManaged((void **)&array, storage_size*sizeof(T)););
+    cudaMallocManaged((void **)&array, storage_size*sizeof(T));
+    //CHECK(cudaMallocManaged(&array, storage_size*sizeof(float)););
+    //cudaMallocPitch(&array, &storage_size,
+    //            ncols * sizeof(T), nrows);
     int i = 0;
     for(i=0; i < storage_size; i++) {
         array[i] = other.array[i];

@@ -203,22 +203,22 @@ int etarraybasic (){
 
 
 
-    int np = 5;
+    int np = 10;
     //int nrows = np;
     //int ncols = np;
-    Array<double> a(np,np), b(np,np), c(np,np), d(np,np);
+    Array<float> a(np,np), b(np,np), c(np,np), d(np,np);
 
-    Array2D<double> x(np,np), y(np,np), z(np,np), w(np,np);
+    Array2D<float> x(np,np), y(np,np), z(np,np), w(np,np);
 
     // initialize arrays with some values
     for (int i=0; i<np; ++i) {
          for (int j=0; j<np; ++j) {
-            a(i,j) = static_cast <double>(i*(j+1));
+            a(i,j) = static_cast <float>(i*(j+1));
             a(i,j) = 1.;//a(i,j) + 5.;
             b(i,j) = a(i,j)+a(i,j);
             c(i,j) = a(i,j)+b(i,j);
 
-            x(i,j) = static_cast <double>(i*(j+1));
+            x(i,j) = static_cast <float>(i*(j+1));
             x(i,j) = 1.;//x(i,j) + 5.;
             y(i,j) = x(i,j)+x(i,j);
             z(i,j) = x(i,j)+y(i,j);
@@ -280,11 +280,11 @@ int etarraybasic (){
     compare(c,z,"elementwise addition");
 
     
-    a = 1.2 * a;  //expression template supports scalars
+    a = 1.2f * a;  //expression template supports scalars
     std::cout << "1.2*a ";
     print(a);
 
-    x = 1.2 * x;  //expression template supports scalars
+    x = 1.2f * x;  //expression template supports scalars
     std::cout << "1.2*x ";
     print(x);
 
@@ -307,12 +307,12 @@ int etarraybasic (){
     compare(a,x,"elementwise matrix multiplication");
 
 
-    a = 1.2*a + a*b;
+    a = 1.2f*a + a*b;
     std::cout << "1.2*a + a*b: ";
     print(a);
 
 
-    x = 1.2*x + x*y;
+    x = 1.2f*x + x*y;
     std::cout << "1.2*x + x*y: ";
     print(x);
 
@@ -353,12 +353,12 @@ int etarraybasic (){
     compare(c,z,"(mat + mat) + mat combined");
 
 
-    d=1.;
+    d=1.f;
     c = matmul(d,c);
     std::cout << "after c=matmul(d,c) ";
     print(c);
 
-    w=1.;
+    w=1.f;
     z = matmul(w,z);
     std::cout << "xfter z=matmul(w,z) ";
     print(z);
@@ -374,7 +374,7 @@ int etarraybasic (){
     compare(b,y,"b,y");
 
     //c = matmul(d,c);
-    c = matmul((c+.5*d),d); //still no support for combined & cached terms
+    c = matmul((c+.5f*d),d); //still no support for combined & cached terms
     std::cout << "after c=matmul((1.+b),c) ";
     print(c);
 
@@ -385,7 +385,7 @@ int etarraybasic (){
     compare(d,w,"d,w");
 
     //z = matmul(w,z);
-    z = matmul((z+.5*w),w); //still no support for zomyinew & zxzhew terms
+    z = matmul((z+.5f*w),w); //still no support for zomyinew & zxzhew terms
     std::cout << "xfter z=matmul((1.+y),z) ";
     print(z);
 
