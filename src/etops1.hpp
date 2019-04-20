@@ -10,7 +10,7 @@
 #include "etmatrix.hpp"
 
 //#include "elementwise_add.hpp"
-
+#include "gpu_math.cu"
 
 #include <cuda_runtime.h>
 
@@ -73,24 +73,29 @@ class A_Add {
       int dimy = 32;
       dim3 block(dimx, dimy);
       dim3 grid((nx + block.x - 1) / block.x, (ny + block.y - 1) / block.y);
-      sumArraysOnGPU_1Dgrid1Dblock<<<grid, block>>>();
+      // sumArraysOnGPU_1Dgrid1Dblock<<<grid, block>>>(
+      //                     op1.array, op2.array, val_, storage_size);
+      sumArraysOnGPU_1Dgrid1Dblock<<<grid, block>>>(
+                          op1.expr_rep, op2.expr_rep, val_, storage_size);
     }
 
  
-    //extern "C" 
-    //__device__ __host__
-    //__global__
-    __host__ __device__
-    void sumArraysOnGPU_1Dgrid1Dblock() const{
-      /**/
-      const int N = storage_size;
-      // 1D general case: keeps working when arrays get big!
-      int i = blockIdx.x * blockDim.x + threadIdx.x;
-      while (i < N){ 
-          val_(i) = op1(i) + op2(i);
-          i += blockDim.x*gridDim.x; //step to a new block.  
-      }
-    }
+    // extern "C" 
+    // //__device__ __host__
+    // __host__ __device__
+    // //__global__
+    // //__host__ __device__
+    // void sumArraysOnGPU_1Dgrid1Dblock() const{
+    //   /**/
+    //   const int N = storage_size;
+    //   // 1D general case: keeps working when arrays get big!
+    //   int i = blockIdx.x * blockDim.x + threadIdx.x;
+    //   while (i < N){ 
+    //       val_(i) = op1.array[i] + op2.array[i]; 
+    //       //val_(i) = op1.expr_rep(i) + op2.expr_rep(i); //et class has no member, array!
+    //       i += blockDim.x*gridDim.x; //step to a new block.  
+    //   }
+    // }
 
 
 
@@ -112,7 +117,8 @@ class A_Add {
 
 
     void cache() const {
-
+      int nrows = op1.getnrows();
+      int ncols = op1.getncols();
       val_.SetArray(op1.getnrows(), op2.getncols());
       op1.cache(); op2.cache();
 
@@ -120,6 +126,8 @@ class A_Add {
 
       sum2(nrows,ncols);
       //sum_gpu_setup(); //helper 
+
+      
 
       //val_ = op1.val() + op2.val();
       
