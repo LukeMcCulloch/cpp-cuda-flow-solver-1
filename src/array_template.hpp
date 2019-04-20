@@ -165,7 +165,7 @@ class Array2D{
         T& operator() (int row, int col);        // Subscript operators in pairs
         const T&  operator() (int row, int col) const;  
         
-        T& operator() (int i);        // Subscript operators in pairs
+        T& operator() (int i);        // Subscript operator
         const T&  operator() (int i) const;  
         
         
@@ -173,7 +173,7 @@ class Array2D{
         Array2D operator = (const T a);
 
 
-        // linalg ops: see array ops
+        // for linear algebra operations see: arrayops.hpp
         
         
         // array[][] access:

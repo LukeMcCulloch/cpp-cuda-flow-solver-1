@@ -1,3 +1,5 @@
+#pragma once
+
 #if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
     #include "win_time.h"
     //const auto& timezone = timezone2;

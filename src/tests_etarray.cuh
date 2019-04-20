@@ -11,9 +11,13 @@
 #include <stdio.h>
 
 
+//=================================
+// fwd declare
+//class SolverManager;
 
 //=================================
 // the actual function
+//int etarraybasic(SolverManager& );
 int etarraybasic();
 
 // class TestArray:

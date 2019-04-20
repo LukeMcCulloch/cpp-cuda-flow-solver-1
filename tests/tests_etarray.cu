@@ -126,6 +126,7 @@ void helloFromCpu(){
 
 
 
+//int etarraybasic (SolverManager& SM){
 int etarraybasic (){
 
 

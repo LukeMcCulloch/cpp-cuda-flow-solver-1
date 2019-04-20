@@ -8,7 +8,7 @@
 
 FXX = gfortran
 CXX = g++
-NXX = nvcc 
+NXX = nvcc -x cu  -arch=sm_30  -rdc=true -lcudadevrt
 CFLAGS =  -Wall #Wall: warn all unused variables  -g -O0 `sdl-config --cflags --libs`
 LDFLAGS = #-lGL -lGLU -lglut -lpthread  -lSDL_mixer -lGLEW -lcuda
 NVFLAGS = -g -G -O0
@@ -52,7 +52,7 @@ OBJECTS = tests_array.o tests_etarray.o main.o
 $(BUILD_DIR)/solver: 	$(SRC_DIRS)/main.o  \
 						$(SRC_DIRS)/tests_array.o \
 						$(TEST_DIR)/tests_etarray.o 
-	$(NXX)  -x cu 	$(SRC_DIRS)/main.cpp $(SRC_DIRS)/tests_array.cpp $(TEST_DIR)/tests_etarray.cu -o $(BUILD_DIR)/solver 
+	$(NXX) 	$(SRC_DIRS)/main.cpp $(SRC_DIRS)/tests_array.cpp $(TEST_DIR)/tests_etarray.cu -o $(BUILD_DIR)/solver 
 
 
 

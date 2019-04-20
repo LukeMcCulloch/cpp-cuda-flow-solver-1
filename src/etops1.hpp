@@ -28,12 +28,19 @@ class A_Add {
     bool iscached = 0;
     bool evalme = 0;
 
+    int storage_size, nrows, ncols;
+
     mutable Array<T> val_;
 
     // constructor initializes references to operands
     A_Add (OP1 const& a, OP2 const& b)
      : op1(a), op2(b) {
        
+      //fixme: assert op1.size() == op2.size();
+      //fixme: assert op1.getnrows() == op2.getnrows();
+      nrows = op1.getnrows();
+      ncols = op1.getncols();
+      storage_size = op1.size();
       // testing only!:
       //cache();
       //iscached =1;
@@ -55,20 +62,31 @@ class A_Add {
             val_(i) = op1(i) + op2(i);
           }
     }
+    
+    //__global__
+    __device__ __host__ 
+    void sum_logic() const{
+      int nx = nrows;
+      int ny = ncols;
+      // invoke kernel at host side
+      int dimx = 32;
+      int dimy = 32;
+      dim3 block(dimx, dimy);
+      dim3 grid((nx + block.x - 1) / block.x, (ny + block.y - 1) / block.y);
+      sumArraysOnGPU_1Dgrid1Dblock<<<grid, block>>>();
+    }
 
 
     __device__ __host__  
-    void sumArraysOnGPU_1Dgrid1Dblock(int nrows, int ncols)
-    {
-
-        const int N = nrows*ncols;
-
-        // 1D general case: keeps working when arrays get big!
-        int i = blockIdx.x * blockDim.x + threadIdx.x;
-        while (i < N){ 
-            val_[i] = op1(i) + op2(i);
-            i += blockDim.x*gridDim.x; //trick  
-        }
+    void sumArraysOnGPU_1Dgrid1Dblock() const{
+      /**/
+      const int N = storage_size;
+      // 1D general case: keeps working when arrays get big!
+      int i = blockIdx.x * blockDim.x + threadIdx.x;
+      while (i < N){ 
+          val_(i) = op1(i) + op2(i);
+          i += blockDim.x*gridDim.x; //step to a new block.  
+      }
     }
 
 
@@ -76,7 +94,7 @@ class A_Add {
     // grid 2D block 2D
     __device__ __host__   
     void sumMatrixGPU_2Dgrid2Dblock(float *MatA, float *MatB, float *MatC, 
-                                     int nx,int ny)
+                                     int nx,int ny) 
     {
 
         unsigned int ix = threadIdx.x + blockIdx.x * blockDim.x;
@@ -91,15 +109,14 @@ class A_Add {
 
 
     void cache() const {
-      int nrows = op1.getnrows();
-      int ncols = op1.getncols();
 
       val_.SetArray(op1.getnrows(), op2.getncols());
       op1.cache(); op2.cache();
 
       val_ = 0.;
-      //sum1(nrows,ncols);
+
       sum2(nrows,ncols);
+      //sum_logic(); //helper 
 
       //val_ = op1.val() + op2.val();
       
