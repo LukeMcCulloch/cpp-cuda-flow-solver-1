@@ -64,8 +64,8 @@ class A_Add {
     }
     
     //__global__
-    __device__ __host__ 
-    void sum_logic() const{
+    //__device__ __host__ 
+    void sum_gpu_setup() const{
       int nx = nrows;
       int ny = ncols;
       // invoke kernel at host side
@@ -76,8 +76,11 @@ class A_Add {
       sumArraysOnGPU_1Dgrid1Dblock<<<grid, block>>>();
     }
 
-
-    __device__ __host__  
+ 
+    //extern "C" 
+    //__device__ __host__
+    //__global__
+    __host__ __device__
     void sumArraysOnGPU_1Dgrid1Dblock() const{
       /**/
       const int N = storage_size;
@@ -116,7 +119,7 @@ class A_Add {
       val_ = 0.;
 
       sum2(nrows,ncols);
-      //sum_logic(); //helper 
+      //sum_gpu_setup(); //helper 
 
       //val_ = op1.val() + op2.val();
       

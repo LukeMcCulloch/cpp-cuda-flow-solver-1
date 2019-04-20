@@ -13,7 +13,7 @@
 
 //=================================
 // fwd declare
-//class SolverManager;
+class SolverManager;
 
 //=================================
 // the actual function

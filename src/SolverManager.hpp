@@ -146,7 +146,7 @@ void SolverManager::driver(int argc, char *argv[]){
     cout << "Hello plate?" << endl;
     plate();
 
-    //initcuda();
+    initcuda();
     
 }
 
@@ -160,14 +160,14 @@ void SolverManager::startMessage(){
 }
 
 
-// void SolverManager::initcuda(){
-//     cout << "-------------------------------------------";
-//     cout << "Starting CUDA:" << endl;
-//     cout << "" << endl;
-//     cudahandle.startCUDA();
-//     cout << "-------------------------------------------" ;
+void SolverManager::initcuda(){
+    cout << "-------------------------------------------";
+    cout << "Starting CUDA:" << endl;
+    cout << "" << endl;
+    cudahandle.startCUDA();
+    cout << "-------------------------------------------" ;
     
-// }
+}
 
 
 

@@ -93,14 +93,14 @@ int main (int argc, char **argv) {
 
 
     // set up cuda device
-    int dev = 0;
-    cudaDeviceProp deviceProp;
-    CHECK(cudaGetDeviceProperties(&deviceProp, dev));
-    printf("using Device %d: %s\n", dev, deviceProp.name);
-    CHECK(cudaSetDevice(dev));
+    // int dev = 0;
+    // cudaDeviceProp deviceProp;
+    // CHECK(cudaGetDeviceProperties(&deviceProp, dev));
+    // printf("using Device %d: %s\n", dev, deviceProp.name);
+    // CHECK(cudaSetDevice(dev));
 
 
-    devprops(deviceProp, dev);
+    // devprops(deviceProp, dev);
 
 
     SolverManager SM = SolverManager();
@@ -120,6 +120,7 @@ int main (int argc, char **argv) {
         arraybasic();
         //expression tempalte (et) array basic tests
         etarraybasic();
+        //etarraybasic(SM);
     }
 
 
