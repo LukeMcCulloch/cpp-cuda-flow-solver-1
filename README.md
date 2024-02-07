@@ -39,3 +39,10 @@ Then kill the PID that you no longer need
 (it's probably called 'XXXX F...m code') with:
 
 		sudo kill -9 PID
+
+
+  Also
+
+https://stackoverflow.com/questions/10871412/resetting-gpu-and-driver-after-cuda-error
+
+nvidia-smi --gpu-reset
