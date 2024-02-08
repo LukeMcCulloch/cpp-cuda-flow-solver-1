@@ -36,3 +36,5 @@
 !! 51 x 51   -> use SOR of 1.95, .001  dt
 !! 11 x 11   -> use SOR of 1.5
 
+
+!! note file needs path to be found, or needs to be in the same folder location as the prompt where the run command is executed.  Not necessarily the build location.

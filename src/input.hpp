@@ -39,6 +39,8 @@ void SolverManager::input_discrete(int argc, char *argv[]){
         }
         infile.open( infilename.c_str() );
         if (infile) break;
+        std::cout << "file name = " << infilename.c_str() << " is open? " << infile.is_open() <<"\n";
+        infile.close();
         cout << "Invalid file. Please enter a valid input file name> " << flush;
     }
 

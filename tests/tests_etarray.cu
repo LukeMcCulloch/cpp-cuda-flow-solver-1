@@ -110,7 +110,10 @@ void compare (T const& c, R const& z,
 __global__ void helloFromGPUthread(){
 
     int i = threadIdx.x;
-    printf("Hellow World GPU id %d \n", i);
+    printf("Hellow World from GPU id %d !\n", i);
+    printf("threadIdx = %d \n",threadIdx.x);
+    printf("blockIdx = %d \n",blockIdx.x);
+    printf("blockDim = %d \n",blockDim.x);
 }
 
 void helloFromCpu(){

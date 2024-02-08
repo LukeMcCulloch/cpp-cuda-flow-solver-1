@@ -8,7 +8,7 @@
 
 FXX = gfortran
 CXX = g++
-NXX = nvcc -x cu  -arch=sm_30  -rdc=true -lcudadevrt
+NXX = nvcc -x cu  -arch=sm_75 -rdc=true -lcudadevrt
 CFLAGS =  -Wall #Wall: warn all unused variables  -g -O0 `sdl-config --cflags --libs`
 LDFLAGS = #-lGL -lGLU -lglut -lpthread  -lSDL_mixer -lGLEW -lcuda
 NVFLAGS = -g -G -O0
